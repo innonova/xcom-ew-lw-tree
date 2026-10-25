@@ -182,3 +182,29 @@ iac's `sites/xcom.aek.dk.yml` changes to `repo: innonova/xcom-ew-lw-tree`
 with the versions bump in the same change: the host verifies a release
 against the repository it is told, so the new name cannot serve v1.0.1,
 which was signed under `aek-innonova`.
+
+## Report (2026-10-25, after the move)
+
+- The repository is `innonova/xcom-ew-lw-tree`; the remotes here and on win
+  follow it.
+- The first run failed in CI: `setup.spec.ts` read the git-ignored samples
+  while its tests were collected (a skipped suite's body still runs). Fixed;
+  the unit tests pass without the samples (197, 57 skipped) and with them
+  (259).
+- build-4 was refused by trusted-updates: lwtree's registration still named
+  `aek-innonova`. The service matches a repository by id and refuses a new
+  name until a person confirms it (a released name can be taken). Fixed on
+  its side; a refusal is final, so build-5 was dispatched by hand.
+- **build-5 is signed**: `lwtree/staging.json` (key `lwtree.testers.1`, issued
+  15:16:03, valid to 2026-11-24) names bundle 2026.1025.150228 and shell
+  0.4.0 on the release. Our client (`desktop/dist/trusted.js`) with only the
+  built-in root keys accepts it and the download's size and hash;
+  `gh attestation verify` passes; trusted-updates' session checked the same
+  with its reference client, and the channel file's timestamp.
+- **The move-over from 0.3.7, on the bench**: `deploy/deploy.sh` offered
+  build-5's installer (the same bytes trusted-updates signed) on the old
+  channel file, signed with `lwtree-1`. The bench's 0.3.7 took the bundle
+  and fetched and checked `shell-0.4.0.exe`; run as the app runs it
+  (`/S --force-run`, from the desktop session), it installed 0.4.0
+  (Authenticode valid), which started, checked trusted-updates and kept its
+  state (`keys_version` 2, the channel file's `issued`).
