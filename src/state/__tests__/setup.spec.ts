@@ -52,8 +52,10 @@ function memoryFiles(
   }
 }
 
-const read = (p: string) => new Uint8Array(readFileSync(p))
-const text = (p: string) => readFileSync(p, 'latin1')
+// A suite's body runs even when it is skipped (to collect its tests): without the
+// samples (CI: they are not in the repository) their files read as nothing.
+const read = (p: string) => (existsSync(p) ? new Uint8Array(readFileSync(p)) : new Uint8Array())
+const text = (p: string) => (existsSync(p) ? readFileSync(p, 'latin1') : '')
 const utf8 = (s: string) => new TextEncoder().encode(s)
 const str = (b: Uint8Array | undefined) => new TextDecoder().decode(b)
 
@@ -277,8 +279,8 @@ describe.skipIf(!existsSync(ewGame))('a mod on a package the game ships compress
   const start = () =>
     memoryFiles({ 'CookedPCConsole/XComGame.upk': compressed, [SIZE]: utf8('12518488\r\n') })
   // A function's data, one byte changed, in a file beside the script (MODDED_FILE).
-  const plain = scriptPackage(compressed).pkg
-  const data = plain.exportData(plain.findObject('XGUnit.RecordKill', true)).slice()
+  const plain = existsSync(ewGame) ? scriptPackage(compressed).pkg : undefined
+  const data = plain ? plain.exportData(plain.findObject('XGUnit.RecordKill', true)).slice() : new Uint8Array(1)
   data[data.length - 1] = data[data.length - 1]! ^ 1
   const mod: Wanted['scripts'][number] = {
     label: 'Data file mod',
@@ -326,7 +328,7 @@ describe.skipIf(!existsSync(ewGame))('a mod on a package the game ships compress
 
   it('a mod that is there already (it changes nothing) leaves the compressed package as it is', async () => {
     const g = start()
-    const same = { ...mod, files: { 'xgunit.recordkill.function': plain.exportData(plain.findObject('XGUnit.RecordKill', true)).slice() } }
+    const same = { ...mod, files: { 'xgunit.recordkill.function': plain!.exportData(plain!.findObject('XGUnit.RecordKill', true)).slice() } }
     const plan = await planSetup(g, { scripts: [same], files: [], settings: [] }, emptyManaged())
     expect(plan.problems).toEqual([])
     expect(plan.changes).toEqual([])
