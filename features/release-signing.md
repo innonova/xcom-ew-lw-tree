@@ -208,3 +208,20 @@ which was signed under `aek-innonova`.
   (`/S --force-run`, from the desktop session), it installed 0.4.0
   (Authenticode valid), which started, checked trusted-updates and kept its
   state (`keys_version` 2, the channel file's `issued`).
+- **The first update from trusted-updates**: a push to main made build-6, a
+  bundle alone; trusted-updates signed it at 15:23:26, the channel file
+  keeping build-5's shell (kinds version independently). The bench's 0.4.0,
+  restarted, took bundle 2026.1025.152209 for its next start, with its
+  SHA-256 kept, and tidied the 0.3.7-era files away. (Seen in the app's
+  store; a screenshot showed only the terminal the capture ran in, over the
+  app.)
+- Pushes that change only notes (`features/`, `docs/`, `*.md`) no longer make
+  a staging release: each one is an update every tester's app downloads.
+
+**Left:** production. A tag `v1.1.0` releases the website and the desktop
+app's production channel together; it needs the person twice: the approval
+in trusted-updates' admin UI, and iac's production apply of
+`sites/xcom.aek.dk.yml` (`repo: innonova/xcom-ew-lw-tree`) with the version
+bump, which I push to iac once the tag's release exists. Then the old
+staging channel file and `lwtree-1` retire (`publish-bundle.mjs`, the
+legacy half of `deploy.sh`, `bundle-format.ts`'s signing).
