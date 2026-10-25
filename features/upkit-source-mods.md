@@ -1,8 +1,11 @@
 ---
-title: "Mods as source diffs: a file type of our own (.upkmod), applied to the decompiled source and compiled against the player's own packages"
-status: review
+title: "Mods as source diffs: a file type of our own (.upkmod), applied to the
+  decompiled source and compiled against the player's own packages"
+status: done
 priority: 3
-dependsOn: [upkit-apply, tools-mods-complete]
+dependsOn:
+  - upkit-apply
+  - tools-mods-complete
 ---
 
 ## Purpose

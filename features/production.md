@@ -1,8 +1,11 @@
 ---
 title: "Going live: the desktop app in production, wherever its files are hosted"
-status: review
+status: done
 priority: 1
-dependsOn: [deploy, desktop-updates, desktop-app-page]
+dependsOn:
+  - deploy
+  - desktop-updates
+  - desktop-app-page
 ---
 
 ## Purpose

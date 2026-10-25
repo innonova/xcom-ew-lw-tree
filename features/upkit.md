@@ -1,8 +1,8 @@
 ---
-title: "upkit: an UnrealScript decompiler and recompiler for Enemy Within's packages, as a standalone tool"
-status: review
+title: "upkit: an UnrealScript decompiler and recompiler for Enemy Within's
+  packages, as a standalone tool"
+status: done
 priority: 2
-dependsOn: []
 ---
 
 ## Purpose

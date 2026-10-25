@@ -1,8 +1,10 @@
 ---
-title: "PatchUPK mods converted to .upkmod: the same change as source diffs, checked object by object"
-status: review
+title: "PatchUPK mods converted to .upkmod: the same change as source diffs,
+  checked object by object"
+status: done
 priority: 2
-dependsOn: [upkit-source-mods]
+dependsOn:
+  - upkit-source-mods
 ---
 
 ## Purpose

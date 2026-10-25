@@ -1,8 +1,11 @@
 ---
-title: "Our patcher's own mode: scripts that say they are for it, read without PatchUPK's faults"
-status: review
+title: "Our patcher's own mode: scripts that say they are for it, read without
+  PatchUPK's faults"
+status: done
 priority: 2
-dependsOn: [upkit-apply, tools-mods-complete]
+dependsOn:
+  - upkit-apply
+  - tools-mods-complete
 ---
 
 ## Purpose

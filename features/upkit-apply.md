@@ -1,8 +1,11 @@
 ---
-title: "Our own patcher: PatchUPK's mod scripts applied by the app's engine, completed, and by upkit's command line"
-status: review
+title: "Our own patcher: PatchUPK's mod scripts applied by the app's engine,
+  completed, and by upkit's command line"
+status: done
 priority: 2
-dependsOn: [upkit, game-tools]
+dependsOn:
+  - upkit
+  - game-tools
 ---
 
 ## Purpose

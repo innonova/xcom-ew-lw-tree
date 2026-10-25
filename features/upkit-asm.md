@@ -1,8 +1,10 @@
 ---
-title: "upkit: inline assembly for bytecode UnrealScript cannot say (hand patches, keep their bytes)"
-status: review
+title: "upkit: inline assembly for bytecode UnrealScript cannot say (hand
+  patches, keep their bytes)"
+status: done
 priority: 2
-dependsOn: [upkit]
+dependsOn:
+  - upkit
 ---
 
 ## Purpose

@@ -1,8 +1,12 @@
 ---
-title: "Each game version its own setup; the version chosen with buttons; LWR's colours its own"
-status: review
+title: Each game version its own setup; the version chosen with buttons; LWR's
+  colours its own
+status: done
 priority: 1
-dependsOn: [game-setups, game-bases, game-soldiers]
+dependsOn:
+  - game-setups
+  - game-bases
+  - game-soldiers
 ---
 
 ## Purpose

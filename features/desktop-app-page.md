@@ -1,8 +1,11 @@
 ---
-title: "The desktop app shown on the website: what it does, screenshots, download, credits"
-status: review
+title: "The desktop app shown on the website: what it does, screenshots,
+  download, credits"
+status: done
 priority: 2
-dependsOn: [desktop-app, desktop-updates]
+dependsOn:
+  - desktop-app
+  - desktop-updates
 ---
 
 ## Purpose

@@ -1,8 +1,11 @@
 ---
-title: "Tools: mods that bring data files, and mods on packages the game ships compressed"
-status: review
+title: "Tools: mods that bring data files, and mods on packages the game ships
+  compressed"
+status: done
 priority: 2
-dependsOn: [game-tools, upkit-apply]
+dependsOn:
+  - game-tools
+  - upkit-apply
 ---
 
 ## Purpose

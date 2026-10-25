@@ -1,8 +1,10 @@
 ---
-title: "upkit: the native interface mapped (for upkit's compiler, and as a reference modders generate)"
-status: review
+title: "upkit: the native interface mapped (for upkit's compiler, and as a
+  reference modders generate)"
+status: done
 priority: 3
-dependsOn: [upkit]
+dependsOn:
+  - upkit
 ---
 
 ## Purpose
