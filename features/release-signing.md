@@ -1,6 +1,6 @@
 ---
 title: "Signing the desktop app's updates without a key anyone holds: attested builds, signed by the estate's trusted-updates"
-status: in-progress
+status: review
 priority: 2
 dependsOn: [production, desktop-updates]
 ---
@@ -225,3 +225,22 @@ in trusted-updates' admin UI, and iac's production apply of
 bump, which I push to iac once the tag's release exists. Then the old
 staging channel file and `lwtree-1` retire (`publish-bundle.mjs`, the
 legacy half of `deploy.sh`, `bundle-format.ts`'s signing).
+
+## Report (2026-10-25, production)
+
+- Tag `v1.1.0`: one release with the website's tarball (cosign, the innonova
+  identity), the bundle 2026.1025.152547, the production installer 0.4.0 and
+  the manifest for `production`. The person approved it in trusted-updates;
+  `lwtree/production.json` (issued 15:47:38) names both. Our client, with
+  only the built-in root keys, accepts it (an app on that bundle and shell:
+  nothing to do).
+- iac `b1a0b49`: `sites/xcom.aek.dk.yml` names `innonova/xcom-ew-lw-tree`,
+  dev and prod at v1.1.0. Dev looked at from the seat (headers, the files,
+  the download page in a browser through it); change request
+  innonova/iac#209, applied. https://xcom.aek.dk/ serves v1.1.0, its
+  download page linking the v1.1.0 installer on GitHub.
+- Not done: the old staging channel file and `lwtree-1` still exist
+  (`publish-bundle.mjs`, the legacy half of `deploy.sh`, the signing half of
+  `bundle-format.ts`). The bench, the only 0.3.7 we know of, has moved;
+  retiring them is a small change for when the person says no other 0.3.x
+  is out there.
