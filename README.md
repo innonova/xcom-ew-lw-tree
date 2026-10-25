@@ -33,7 +33,11 @@ allow it).
   setup to the game in one go (after a reinstall too): a plan first, the
   originals kept in `lwtree-backup/`. The patching is our own implementation
   of PatcherGUI's format, checked byte for byte against PatchUPK
-  (`features/game-tools.md`, `features/desktop-app.md`).
+  (`features/game-tools.md`, `features/desktop-app.md`). It updates itself
+  from releases this repository's workflow built and attested, signed by
+  innonova's trusted-updates (`features/release-signing.md`); anyone can
+  check a download with
+  `gh attestation verify <file> --repo innonova/xcom-ew-lw-tree`.
 - **Planner:** pick techs or Foundry projects; get the research still needed,
   in order, with time and costs.
 - **Live:** in Chromium browsers, point the page at your SaveData folder

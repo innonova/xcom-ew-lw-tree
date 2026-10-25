@@ -1,7 +1,6 @@
-# The Windows installer (features/desktop-app.md), built on Windows
-# (scripts/build-desktop-win.sh does it on the Windows VM). Not code-signed
-# yet: the person decides about using the existing certificate; the exe gets
-# its icon and version details all the same.
+# The Windows installer (features/desktop-app.md), built on Windows: by
+# .github/workflows/release.yml, code-signed there (Azure Artifact Signing),
+# or by scripts/build-desktop-win.sh on the Windows VM, unsigned, for the bench.
 appId: ch.innonova.lwtree
 productName: Long War Tech Tree
 copyright: Anders Eggers-Krag
@@ -15,7 +14,7 @@ files:
   # A dotfile: globs leave it out unless named (the base bundle's version).
   - site/.bundle-info.json
   - package.json
-  # Where this build takes its updates from (scripts/build-desktop-win.sh).
+  # Where this build takes its updates from: trusted-updates, the product, the channel.
   - update.json
 win:
   target:

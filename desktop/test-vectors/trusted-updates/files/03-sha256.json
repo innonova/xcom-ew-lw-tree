@@ -1,0 +1,9 @@
+{
+  "description": "the right size, another hash",
+  "artifact": {
+    "size": 30,
+    "sha256": "f41f3fa625ff120ddca7ef456bf66371ecea23c129f4e4c32367101edb516cf8"
+  },
+  "file_base64": "dGhlIGJ5dGVzIG9mIGEgc21hbGwgYXJ0aWZhY3QK",
+  "expect": "file-sha256"
+}

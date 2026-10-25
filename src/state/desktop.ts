@@ -57,6 +57,8 @@ export interface BundleState {
   checking: boolean
   lastCheck?: string
   error?: string
+  /** Why the last check could not confirm what is current (trusted-updates refused or was out of reach; 0.4.0 on). */
+  unconfirmed?: string
 }
 
 /** window.lwtreeDesktop, from desktop/src/preload.ts. */

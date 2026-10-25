@@ -12,7 +12,7 @@ import { pathToFileURL } from 'node:url'
 import { createHash } from 'node:crypto'
 import { BaseStore } from './bases'
 import { BundleStore } from './bundles'
-import { DEFAULT_UPDATE, TRUSTED_KEYS } from './keys'
+import { DEFAULT_UPDATE, KEYS_VERSION, ROOT_KEYS } from './keys'
 import {
   findGame,
   gameDirUnder,
@@ -55,19 +55,23 @@ function baseInfo(): { version: string } {
     return { version: '0.0.0' }
   }
 }
-/** Where updates come from: the build's update.json (scripts/build-desktop-win.sh), else staging. */
-function updateTarget(): { url: string; channel: string } {
+/**
+ * Where updates come from: the build's update.json (the release workflow
+ * writes it: trusted-updates' base, the product, the channel), else staging.
+ */
+function updateTarget(): typeof DEFAULT_UPDATE {
   try {
     const t = JSON.parse(readFileSync(path.join(app.getAppPath(), 'update.json'), 'utf8'))
-    if (typeof t.url === 'string' && /^[a-z]+$/.test(t.channel)) return t
+    if (typeof t.base === 'string' && /^[a-z0-9][a-z0-9._-]{0,63}$/.test(t.channel) && typeof t.product === 'string')
+      return { base: t.base, product: t.product, channel: t.channel }
   } catch {
     // None in this build.
   }
   return DEFAULT_UPDATE
 }
 const UPDATE = updateTarget()
-// Tests point the app at their own server and key; LWTREE_UPDATE_URL="" turns updates off.
-const updateUrl = process.env.LWTREE_UPDATE_URL ?? UPDATE.url
+// Tests point the app at their own server, channel and root key; LWTREE_UPDATE_URL="" turns updates off.
+const updateUrl = process.env.LWTREE_UPDATE_URL ?? UPDATE.base
 /** Left by an update's install, so the app comes to the front when it starts again. */
 const UPDATED_MARK = path.join(app.getPath('userData'), 'updated.mark')
 
@@ -76,9 +80,16 @@ const bundles = new BundleStore({
   baseDir: SITE,
   baseVersion: baseInfo().version,
   shellVersion: app.getVersion(),
-  keys: process.env.LWTREE_UPDATE_KEYS ? JSON.parse(process.env.LWTREE_UPDATE_KEYS) : TRUSTED_KEYS,
-  updateUrl: updateUrl || undefined,
-  channel: process.env.LWTREE_UPDATE_CHANNEL ?? UPDATE.channel,
+  trusted: updateUrl
+    ? {
+        base: updateUrl,
+        product: UPDATE.product,
+        channel: process.env.LWTREE_UPDATE_CHANNEL ?? UPDATE.channel,
+        platform: 'win-x64',
+        rootKeys: process.env.LWTREE_UPDATE_ROOT_KEYS ? JSON.parse(process.env.LWTREE_UPDATE_ROOT_KEYS) : ROOT_KEYS,
+        keysVersion: process.env.LWTREE_UPDATE_KEYS_VERSION ? Number(process.env.LWTREE_UPDATE_KEYS_VERSION) : KEYS_VERSION,
+      }
+    : undefined,
   fetch: (u) => net.fetch(u, { cache: 'no-store' }),
   onChange: () => tellAll(),
 })

@@ -1,0 +1,9 @@
+{
+  "description": "one byte more than size",
+  "artifact": {
+    "size": 29,
+    "sha256": "7a86dc6f11aab521a74d665c9ff676b34fece1cf21234bf2dff1b2eefa9be455"
+  },
+  "file_base64": "dGhlIGJ5dGVzIG9mIGEgc21hbGwgYXJ0aWZhY3QK",
+  "expect": "file-size"
+}

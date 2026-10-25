@@ -1,0 +1,50 @@
+{
+  "description": "an \"expires\" in keys.json is a field the format does not define: ignored, even when past",
+  "given": {
+    "root_keys": [
+      {
+        "id": "root-aek-1",
+        "ed25519": "ChIVhjDfCENE47+y2WezYRtFZIl7d+x99OtftuRODNg="
+      },
+      {
+        "id": "root-mk-1",
+        "ed25519": "hkqc8kx09ZkHhRQQ49sqef2cTmJ4kt7f8vsIcOVOHgA="
+      }
+    ],
+    "product": "demo",
+    "channel": "production",
+    "platform": "win-x64",
+    "kinds": [
+      "shell",
+      "bundle"
+    ],
+    "now": "2026-10-24T12:00:00Z",
+    "state": {
+      "keys_version": 1,
+      "installed": {}
+    }
+  },
+  "documents": {
+    "keys.json": "{\"body\":\"{\\\"type\\\":\\\"keys\\\",\\\"format\\\":1,\\\"product\\\":\\\"demo\\\",\\\"version\\\":2,\\\"issued\\\":\\\"2026-10-01T00:00:00Z\\\",\\\"channels\\\":{\\\"production\\\":[{\\\"id\\\":\\\"demo-production-1\\\",\\\"ed25519\\\":\\\"UwKDD82RU4DonH4/YJC5i2pJ5ji8tyQ5InfKx3aF5Hs=\\\"}]},\\\"testers\\\":[{\\\"id\\\":\\\"demo-testers-1\\\",\\\"ed25519\\\":\\\"xMvBGNhUijrKkCT1rsoYTZoka5DKr6DJo4EI6x5zHrM=\\\"}],\\\"revoked\\\":[{\\\"id\\\":\\\"demo-production-0\\\",\\\"ed25519\\\":\\\"8qgPcysDlpmr5U4khaJEefGJU/9lBHQefqRKxQ9Z7K0=\\\",\\\"channel\\\":\\\"production\\\",\\\"reason\\\":\\\"compromised\\\",\\\"revoked\\\":\\\"2026-09-30T00:00:00Z\\\",\\\"valid_until\\\":\\\"2099-01-01T00:00:00Z\\\"},{\\\"id\\\":\\\"demo-production-00\\\",\\\"ed25519\\\":\\\"o55Rwv2iwMMAPLlZH9+w/liOv0p+csBrQ4CNq/Jh0u4=\\\",\\\"channel\\\":\\\"production\\\",\\\"reason\\\":\\\"compromised\\\",\\\"revoked\\\":\\\"2026-09-29T00:00:00Z\\\",\\\"valid_until\\\":\\\"2020-01-01T00:00:00Z\\\"},{\\\"id\\\":\\\"demo-beta-0\\\",\\\"ed25519\\\":\\\"f4T391N5RDxImt+IxA4QLH1RMdsZGeJUHFILhO9NDCI=\\\",\\\"channel\\\":\\\"beta\\\",\\\"reason\\\":\\\"retired\\\",\\\"revoked\\\":\\\"2026-09-28T00:00:00Z\\\"},{\\\"id\\\":\\\"demo-testers-0\\\",\\\"ed25519\\\":\\\"R/i3EcHHH7+e45FJxKsX0wozhrpbOxAu2NQk2ZZD35I=\\\",\\\"reason\\\":\\\"retired\\\",\\\"revoked\\\":\\\"2026-09-27T00:00:00Z\\\"}],\\\"timestamping\\\":[{\\\"id\\\":\\\"test-tsa-listed\\\",\\\"certificate\\\":\\\"MIIB9DCCAZmgAwIBAgIUfGgq+WqyNRey1JCwTxldsiNLqFQwCgYIKoZIzj0EAwIwOjEeMBwGA1UECgwVdHJ1c3RlZC11cGRhdGVzIHRlc3RzMRgwFgYDVQQDDA90ZXN0IFRTQSBsaXN0ZWQwIBcNMjYxMDI1MTAzOTAzWhgPMjEyNjEwMDExMDM5MDNaMDoxHjAcBgNVBAoMFXRydXN0ZWQtdXBkYXRlcyB0ZXN0czEYMBYGA1UEAwwPdGVzdCBUU0EgbGlzdGVkMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEFCT2nXHsE/OcXoq5ES+NlXj5rWL0QYvWc7yC8IKWcBeYQOfOz6nUV+zJFgHsvhUr1/pWxv9NnN5+zjt7HrGPAKN7MHkwHQYDVR0OBBYEFLtccWnjWOYEfX3zM0o5YZ0Ve0IlMB8GA1UdIwQYMBaAFLtccWnjWOYEfX3zM0o5YZ0Ve0IlMA8GA1UdEwEB/wQFMAMBAf8wFgYDVR0lAQH/BAwwCgYIKwYBBQUHAwgwDgYDVR0PAQH/BAQDAgeAMAoGCCqGSM49BAMCA0kAMEYCIQCLN7vdBffwJvugkoP8ekMlrehXgNHTs1cpyna0RQxBrAIhAOTQF82V9DQfkcTqtbZkll0QZaFull1me7Toj2FGRvxv\\\"}],\\\"expires\\\":\\\"2020-01-01T00:00:00Z\\\"}\",\"key\":\"root-aek-1\",\"signature\":\"T36z5hmt1iXGcw6r4h81qjyuwmYXdfl+1urcAivs8dRBxWydT67IqLMRpvPgR3AVUHq98vgZ/oj6wh5yn9IjAw==\"}\n",
+    "production.json": "{\"body\":\"{\\\"type\\\":\\\"channel\\\",\\\"format\\\":1,\\\"product\\\":\\\"demo\\\",\\\"channel\\\":\\\"production\\\",\\\"issued\\\":\\\"2026-10-24T11:00:00Z\\\",\\\"expires\\\":\\\"2026-11-23T11:00:00Z\\\",\\\"artifacts\\\":[{\\\"kind\\\":\\\"shell\\\",\\\"platform\\\":\\\"win-x64\\\",\\\"version\\\":\\\"0.4.0\\\",\\\"name\\\":\\\"Demo-Setup-0.4.0.exe\\\",\\\"url\\\":\\\"https://example.com/demo/Demo-Setup-0.4.0.exe\\\",\\\"size\\\":1234,\\\"sha256\\\":\\\"6d57a3ba1c628b04bc2c2a386808ea247b1c9d766b1224665b324d6dad6a826e\\\",\\\"commit\\\":\\\"0123456789abcdef0123456789abcdef01234567\\\",\\\"run\\\":\\\"https://github.com/innonova/demo/actions/runs/1/attempts/1\\\"},{\\\"kind\\\":\\\"bundle\\\",\\\"version\\\":\\\"2026.10.24.1\\\",\\\"name\\\":\\\"bundle-2026.10.24.1.json\\\",\\\"url\\\":\\\"https://example.com/demo/bundle-2026.10.24.1.json\\\",\\\"size\\\":99,\\\"sha256\\\":\\\"d4636907f866ed08c2d8c70007c6b24b8a3db7a7aecf961284a16bc14e9e9e44\\\",\\\"commit\\\":\\\"0123456789abcdef0123456789abcdef01234567\\\",\\\"run\\\":\\\"https://github.com/innonova/demo/actions/runs/1/attempts/1\\\"}],\\\"revoked\\\":[]}\",\"key\":\"demo-production-1\",\"signature\":\"2/7HKiV4f5+vI3JGI1qztqlkRZa/RMsCrrFUqFDGltGoFbC/EUxD12GxmHxuzQxAc/jVhhtGwqMgWOURwp9WDA==\"}\n"
+  },
+  "expect": {
+    "result": "ok",
+    "decisions": {
+      "shell": {
+        "action": "update",
+        "version": "0.4.0",
+        "sha256": "6d57a3ba1c628b04bc2c2a386808ea247b1c9d766b1224665b324d6dad6a826e"
+      },
+      "bundle": {
+        "action": "update",
+        "version": "2026.10.24.1",
+        "sha256": "d4636907f866ed08c2d8c70007c6b24b8a3db7a7aecf961284a16bc14e9e9e44"
+      }
+    },
+    "state": {
+      "keys_version": 2,
+      "channel_issued": "2026-10-24T11:00:00Z"
+    }
+  }
+}

@@ -4,17 +4,17 @@
 # result copied back to desktop/release/. Only the app's build inputs go to
 # the VM (compiled code, the built site, config, icons), not the working tree.
 #
-#   scripts/build-desktop-win.sh [<channel> <update url>]
+#   scripts/build-desktop-win.sh [<channel>]
 #
-# The app takes its updates from <update url>/bundle/<channel>.json (its
-# update.json). Without arguments: staging, from xcom.innonova.ch, into
-# desktop/release/; any other channel goes to desktop/release/<channel>/, so
-# deploy/deploy.sh never offers it on staging.
+# The app takes its updates from trusted-updates' <channel> (its update.json;
+# desktop/src/keys.ts has the address). Without arguments: staging, into
+# desktop/release/; any other channel goes to desktop/release/<channel>/.
+# A build made here is not attested: it is for the bench. Releases are built
+# by .github/workflows/release.yml.
 set -euo pipefail
 cd "$(dirname "$0")/.."
 channel=${1:-staging}
-url=${2:-https://xcom.innonova.ch}
-[[ "$channel" =~ ^[a-z]+$ && "$url" =~ ^https:// ]] || { echo "usage: $0 [<channel> <https url>]" >&2; exit 2; }
+[[ "$channel" =~ ^[a-z0-9][a-z0-9._-]{0,63}$ ]] || { echo "usage: $0 [<channel>]" >&2; exit 2; }
 out=desktop/release
 [[ "$channel" == staging ]] || out=desktop/release/$channel
 
@@ -25,7 +25,7 @@ out=desktop/release
 (cd desktop && npm run site && npm run build)
 version=$(node -p "require('./desktop/package.json').version")
 target=$(mktemp -d)
-printf '{ "url": "%s", "channel": "%s" }\n' "$url" "$channel" > "$target/update.json"
+printf '{ "base": "https://trusted-updates.innonova.ch", "product": "lwtree", "channel": "%s" }\n' "$channel" > "$target/update.json"
 tar czf /tmp/lwtree-desktop.tgz -C desktop package.json package-lock.json electron-builder.yml build dist site -C "$target" update.json
 rm -rf "$target"
 scp -q /tmp/lwtree-desktop.tgz win:lwtree-desktop.tgz
@@ -36,4 +36,4 @@ ssh win 'Remove-Item -Recurse -Force lwtree-desktop -ErrorAction SilentlyContinu
   npx electron-builder --win nsis *> build.log; if ($LASTEXITCODE) { Get-Content build.log -Tail 20; exit 1 }'
 mkdir -p "$out"
 scp -q "win:lwtree-desktop/release/LongWarTechTree-Setup-$version.exe" "$out/"
-echo "built $out/LongWarTechTree-Setup-$version.exe ($channel, updates from $url)"
+echo "built $out/LongWarTechTree-Setup-$version.exe (updates from trusted-updates, $channel)"

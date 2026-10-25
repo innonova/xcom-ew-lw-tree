@@ -13,7 +13,8 @@ const time = (iso: string) => new Date(iso).toLocaleTimeString()
   <div v-if="updates.state" class="update-panel">
     <p>
       App {{ updates.state.shellVersion }} · site {{ updates.state.serving }}. It fetches new
-      versions of the site by itself, checks their signature, and asks before it switches.
+      versions of the site by itself, checks they are the ones we released, and asks before it
+      switches.
     </p>
     <p class="row">
       <button
@@ -24,6 +25,7 @@ const time = (iso: string) => new Date(iso).toLocaleTimeString()
         {{ updates.state.checking ? 'Checking…' : 'Check for updates' }}
       </button>
       <span v-if="updates.state.checking" class="muted">asking the update server…</span>
+      <span v-else-if="updates.state.unconfirmed" class="error">{{ updates.state.error }}</span>
       <span v-else-if="updates.state.error" class="error">
         The last check failed: {{ updates.state.error }}</span
       >

@@ -1,32 +1,259 @@
-# On a version tag: test and build the site, pack dist/, sign the tarball
-# keyless with cosign (Sigstore) under this workflow's identity, and publish
-# it as a GitHub release. The estate's nginx host (innonova/iac, the site
-# xcom.aek.dk of kind release) verifies the bundle before serving it; the
-# tag it serves is in iac's environments/<env>/versions.yml.
+# Releases (features/production.md, release-signing.md), from the same commit:
+#
+# - the website: on a version tag, dist/ packed and signed keyless with cosign
+#   under this workflow's identity. The estate's nginx host (innonova/iac, the
+#   site xcom.aek.dk of kind release) verifies that bundle before serving it;
+#   the tag it serves is in iac's environments/<env>/versions.yml.
+# - the desktop app's updates: the site as a plain bundle file, and the Windows
+#   installer when there is a new one, attested by this run (actions/attest)
+#   with the manifest trusted-updates.json naming them. trusted-updates
+#   (https://trusted-updates.innonova.ch/lwtree/) hears of the release, checks
+#   the attestations and signs the channel file the app checks
+#   (desktop/src/trusted.ts):
+#     push to main  -> "staging" (testers): a prerelease build-<run>, signed at once.
+#                      The installer only when no release has its version yet
+#                      (or asked for, running this by hand).
+#     tag v*        -> "production": the release v*, with an installer always
+#                      (the website links it), signed once a person approves it
+#                      in trusted-updates' admin UI.
+#   An installer's update.json names its channel, so a tag's installer is not
+#   offered on staging: it would move a tester's app to production.
+#
+# The installer is code-signed by Azure Artifact Signing before it is attested
+# (the attested bytes are the published ones). That job runs in the "production"
+# environment: Azure's federated credential trusts that environment of this
+# repository, so no secret is held anywhere; the environment admits main and
+# tags v*. Its variables (or secrets, for the Azure ids):
+#   AZURE_CLIENT_ID, AZURE_TENANT_ID   the app registration with the federated credential
+#   SIGNING_ENDPOINT                   e.g. https://weu.codesigning.azure.net
+#   SIGNING_ACCOUNT                    the Artifact Signing account
+#   SIGNING_PROFILE                    its certificate profile
+#   SIGNING_PUBLISHER                  the certificate's subject CN (optional)
 name: release
 on:
   push:
+    branches: [main]
     tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      installer:
+        description: Build an installer even if its version was released already
+        type: boolean
+        default: false
 permissions:
-  contents: write   # create the release
-  id-token: write   # keyless signing
+  contents: read
+concurrency:
+  # One release of a ref at a time, in order: a channel never goes back to an older build.
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
 jobs:
-  release:
+  plan:
     runs-on: ubuntu-24.04
+    outputs:
+      tag: ${{ steps.plan.outputs.tag }}
+      channel: ${{ steps.plan.outputs.channel }}
+      shell: ${{ steps.plan.outputs.shell }}
+      installer: ${{ steps.plan.outputs.installer }}
+    steps:
+      - uses: actions/checkout@v7
+      - id: plan
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FORCE: ${{ inputs.installer }}
+        run: |
+          shell=$(node -p "require('./desktop/package.json').version")
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            tag=$GITHUB_REF_NAME channel=production installer=true
+          else
+            tag=build-$GITHUB_RUN_NUMBER channel=staging installer=true
+            # A staging installer of this version already out: the bundle alone.
+            if [[ "$FORCE" != true ]] && gh api --paginate "repos/$GITHUB_REPOSITORY/releases?per_page=100" \
+                --jq '.[] | select(.prerelease) | .assets[].name' | grep -qxF "LongWarTechTree-Setup-$shell.exe"; then
+              installer=false
+            fi
+          fi
+          printf 'tag=%s\nchannel=%s\nshell=%s\ninstaller=%s\n' "$tag" "$channel" "$shell" "$installer" | tee -a "$GITHUB_OUTPUT"
+
+  site:
+    needs: plan
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      id-token: write # cosign keyless, on tags
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
-        with: { node-version: 24, cache: npm }
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            package-lock.json
+            desktop/package-lock.json
       - run: npm ci
       - run: npm run test:unit -- --run
+      # On a tag, the website's download link: this release's installer.
       - run: npm run build
-      - name: pack
+        env:
+          VITE_LWTREE_INSTALLER: ${{ startsWith(github.ref, 'refs/tags/v') && format('https://github.com/{0}/releases/download/{1}/LongWarTechTree-Setup-{2}.exe', github.repository, needs.plan.outputs.tag, needs.plan.outputs.shell) || '' }}
+      - name: the app's own tests (the update checks against trusted-updates' vectors)
+        working-directory: desktop
+        run: npm ci && npm run build && npm test
+      # The release's files gather in up/.
+      - name: the update bundle
         run: |
-          tar -czf xcom-dist.tar.gz -C dist .
-          sha256sum xcom-dist.tar.gz > xcom-dist.tar.gz.sha256
-      - uses: sigstore/cosign-installer@v4.1.2
-      - name: sign
-        run: cosign sign-blob --yes --bundle xcom-dist.tar.gz.sigstore.json xcom-dist.tar.gz
+          mkdir up
+          cp "desktop/release/$(node scripts/build-bundle.mjs)" up/
+      - name: the website, packed and signed
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          tar -czf up/xcom-dist.tar.gz -C dist .
+          (cd up && sha256sum xcom-dist.tar.gz > xcom-dist.tar.gz.sha256)
+      - if: startsWith(github.ref, 'refs/tags/v')
+        uses: sigstore/cosign-installer@v4.1.2
+      - if: startsWith(github.ref, 'refs/tags/v')
+        run: cosign sign-blob --yes --bundle up/xcom-dist.tar.gz.sigstore.json up/xcom-dist.tar.gz
+      - uses: actions/upload-artifact@v7
+        with:
+          name: site
+          path: dist/
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v7
+        with:
+          name: release-files
+          path: up/
+          if-no-files-found: error
+
+  installer:
+    needs: [plan, site]
+    if: needs.plan.outputs.installer == 'true'
+    runs-on: windows-2025
+    environment: production
+    permissions:
+      contents: read
+      id-token: write # the federated credential
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: desktop/package-lock.json
+      # The base bundle: the site this run built, copied with its version stamped.
+      - uses: actions/download-artifact@v8
+        with:
+          name: site
+          path: dist
+      - run: node scripts/copy-site.mjs
+      - name: where updates come from
+        shell: bash
+        env:
+          CHANNEL: ${{ needs.plan.outputs.channel }}
+        run: |
+          printf '{ "base": "https://trusted-updates.innonova.ch", "product": "lwtree", "channel": "%s" }\n' "$CHANNEL" > desktop/update.json
+          cat desktop/update.json
+      - run: npm ci && npm run build
+        working-directory: desktop
+      - uses: azure/login@v3
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID || vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID || vars.AZURE_TENANT_ID }}
+          # Signing needs a token for the signing service, not a subscription: the
+          # app registration's role is on the signing account, so it sees none.
+          allow-no-subscriptions: true
+      - name: build and sign
+        working-directory: desktop
+        shell: bash
+        env:
+          ENDPOINT: ${{ vars.SIGNING_ENDPOINT }}
+          ACCOUNT: ${{ vars.SIGNING_ACCOUNT }}
+          PROFILE: ${{ vars.SIGNING_PROFILE }}
+          # electron-builder's schema wants it; only electron-updater reads it (not used here).
+          PUBLISHER: ${{ vars.SIGNING_PUBLISHER || vars.SIGNING_ACCOUNT }}
+        run: >
+          npx electron-builder --win nsis
+          -c.win.signExecutable=true
+          "-c.win.azureSignOptions.endpoint=$ENDPOINT"
+          "-c.win.azureSignOptions.codeSigningAccountName=$ACCOUNT"
+          "-c.win.azureSignOptions.certificateProfileName=$PROFILE"
+          "-c.win.azureSignOptions.publisherName=$PUBLISHER"
+      - name: the signatures hold
+        shell: pwsh
+        run: |
+          $files = @(Get-ChildItem desktop/release/LongWarTechTree-Setup-*.exe) + @(Get-ChildItem desktop/release/win-unpacked/*.exe)
+          $bad = $false
+          foreach ($f in $files) {
+            $s = Get-AuthenticodeSignature $f.FullName
+            "{0}: {1} ({2})" -f $f.Name, $s.Status, $s.SignerCertificate.Subject
+            if ($s.Status -ne 'Valid') { $bad = $true }
+          }
+          if ($bad) { exit 1 }
+      - uses: actions/upload-artifact@v7
+        with:
+          name: installer
+          path: desktop/release/LongWarTechTree-Setup-*.exe
+          if-no-files-found: error
+
+  release:
+    needs: [plan, site, installer]
+    # Also when no installer was built this time.
+    if: ${{ !cancelled() && needs.site.result == 'success' && (needs.installer.result == 'success' || needs.installer.result == 'skipped') }}
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write # create the release
+      id-token: write # the attestations' Sigstore certificate
+      attestations: write
+      artifact-metadata: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: release-files
+          path: up
+      - if: needs.installer.result == 'success'
+        uses: actions/download-artifact@v8
+        with:
+          name: installer
+          path: up
+      - name: the manifest
+        id: manifest
+        env:
+          CHANNEL: ${{ needs.plan.outputs.channel }}
+          SHELL_VERSION: ${{ needs.plan.outputs.shell }}
+        run: |
+          node - <<'JS'
+          const fs = require('node:fs')
+          const names = fs.readdirSync('up')
+          const artifacts = []
+          for (const n of names) {
+            const b = /^bundle-(.+)\.json$/.exec(n)
+            if (b) artifacts.push({ name: n, kind: 'bundle', version: b[1] })
+            if (n === `LongWarTechTree-Setup-${process.env.SHELL_VERSION}.exe`)
+              artifacts.push({ name: n, kind: 'shell', platform: 'win-x64', version: process.env.SHELL_VERSION })
+          }
+          const manifest = { type: 'manifest', format: 1, product: 'lwtree', channels: [process.env.CHANNEL], artifacts }
+          fs.writeFileSync('up/trusted-updates.json', JSON.stringify(manifest, null, 1) + '\n')
+          JS
+          cat up/trusted-updates.json
+          ls -l up
+          # What is attested: the files the manifest names, and the manifest.
+          { echo 'subjects<<EOF'
+            node -p "require('./up/trusted-updates.json').artifacts.map(a => 'up/' + a.name).join('\\n')"
+            echo up/trusted-updates.json
+            echo EOF; } >> "$GITHUB_OUTPUT"
+      - uses: actions/attest@v4
+        with:
+          subject-path: ${{ steps.manifest.outputs.subjects }}
       - name: release
-        env: { GH_TOKEN: "${{ github.token }}" }
-        run: gh release create "$GITHUB_REF_NAME" --title "$GITHUB_REF_NAME" --notes "xcom.aek.dk $GITHUB_REF_NAME" xcom-dist.tar.gz xcom-dist.tar.gz.sha256 xcom-dist.tar.gz.sigstore.json
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.plan.outputs.tag }}
+          CHANNEL: ${{ needs.plan.outputs.channel }}
+        run: |
+          if [[ "$CHANNEL" == production ]]; then
+            notes="xcom.aek.dk and the desktop app, $TAG (production)."
+            pre=false
+          else
+            notes="The desktop app's staging build of ${GITHUB_SHA:0:7}, for testers."
+            pre=true
+          fi
+          gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" --title "$TAG" \
+            --notes "$notes" --prerelease="$pre" up/*

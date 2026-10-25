@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { generateKeyPairSync } from 'node:crypto'
+import { generateKeyPairSync, sign } from 'node:crypto'
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
@@ -9,23 +9,58 @@ import {
   packBundle,
   sha256,
   signBundle,
-  signFile,
   unpack,
   type SignedBundle,
-  type UpdateInfo,
 } from './bundle-format'
-import { at, BundleStore, type Fetch } from './bundles'
+import { BundleStore, type Fetch } from './bundles'
 
 const pair = () => {
   const { privateKey, publicKey } = generateKeyPairSync('ed25519')
   return {
     priv: privateKey.export({ type: 'pkcs8', format: 'pem' }).toString(),
     pub: publicKey.export({ type: 'spki', format: 'pem' }).toString(),
+    /** The 32 raw bytes, base64, as trusted-updates writes keys. */
+    raw: publicKey.export({ type: 'spki', format: 'der' }).subarray(12).toString('base64'),
+    key: privateKey,
   }
 }
 const ours = pair()
 const theirs = pair()
 const KEYS = { k1: ours.pub }
+// trusted-updates in miniature (trusted.ts): a root key, and the channel's key it vouches for.
+const root = pair()
+const channelKey = pair()
+const envelope = (body: object, id: string, key = channelKey.key) => {
+  const text = JSON.stringify(body)
+  return JSON.stringify({ body: text, key: id, signature: sign(null, Buffer.from(text), key).toString('base64') })
+}
+const KEYS_JSON = envelope(
+  {
+    type: 'keys', format: 1, product: 'lwtree', version: 1, issued: '2026-10-25T00:00:00Z',
+    channels: {}, testers: [{ id: 'lwtree.testers.1', ed25519: channelKey.raw }], revoked: [],
+  },
+  'root.test.1',
+  root.key,
+)
+let issued = 0
+/** The channel file, naming files under the test server; a newer `issued` each time. */
+function channel(artifacts: { kind: string; platform?: string; version: string; file: string; data: Uint8Array }[], revoked: { kind: string; version: string; sha256: string }[] = [], key = channelKey.key) {
+  issued++
+  return envelope(
+    {
+      type: 'channel', format: 1, product: 'lwtree', channel: 'test',
+      issued: new Date(Date.UTC(2026, 9, 25, 0, 0, issued)).toISOString().replace('.000', ''),
+      expires: '2099-01-01T00:00:00Z',
+      artifacts: artifacts.map((a) => ({
+        kind: a.kind, ...(a.platform ? { platform: a.platform } : {}), version: a.version, name: a.file,
+        url: `https://downloads.test/${a.file}`, size: a.data.length, sha256: sha256(a.data), commit: 'c0ffee', run: 'https://ci.test/1',
+      })),
+      revoked: revoked.map((r) => ({ ...r, reason: 'test' })),
+    },
+    'lwtree.testers.1',
+    key,
+  )
+}
 
 function site(marker: string) {
   const dir = mkdtempSync(path.join(tmpdir(), 'lwtree-site-'))
@@ -34,69 +69,65 @@ function site(marker: string) {
   writeFileSync(path.join(dir, 'assets', 'app.js'), `console.log(${JSON.stringify(marker)})`)
   return dir
 }
-async function bundle(version: string, minShellVersion = '0.2.0', key = ours.priv) {
-  const payload = await packBundle(site(`site ${version}`), {
-    version,
-    minShellVersion,
-    releaseDate: '2026-10-19T00:00:00Z',
-  })
-  return signBundle(payload, 'k1', key)
+/** A plain bundle file, as the release workflow publishes it. */
+async function bundle(version: string, minShellVersion = '0.2.0') {
+  const payload = await packBundle(site(`site ${version}`), { version, minShellVersion, releaseDate: '2026-10-19T00:00:00Z' })
+  return Buffer.from(JSON.stringify(payload))
 }
 
-/** An update server in memory: path → bytes. */
+/** The update server and the download host in memory: path → bytes. */
 function server(files: Record<string, unknown>): Fetch {
   return async (url) => {
     const p = new URL(url).pathname.replace(/^\//, '')
     const body = files[p]
-    if (body === undefined)
-      return { ok: false, status: 404, arrayBuffer: async () => new ArrayBuffer(0) }
-    const bytes =
-      body instanceof Uint8Array
-        ? body
-        : Buffer.from(typeof body === 'string' ? body : JSON.stringify(body))
+    if (body === undefined) return { ok: false, status: 404, arrayBuffer: async () => new ArrayBuffer(0) }
+    const bytes = body instanceof Uint8Array ? body : Buffer.from(typeof body === 'string' ? body : JSON.stringify(body))
     return {
       ok: true,
       status: 200,
-      arrayBuffer: async () =>
-        bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) as ArrayBuffer,
+      arrayBuffer: async () => bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) as ArrayBuffer,
     }
   }
 }
-function info(version: string, minShellVersion = '0.2.0', shell?: UpdateInfo['shell']): UpdateInfo {
-  return {
-    channel: 'test',
-    bundle: { version, minShellVersion, releaseDate: '', size: 0, url: `bundle/${version}.json` },
-    shell,
-  }
+/** The files of a channel offering this bundle (and a shell, if given). */
+async function offering(version: string, minShellVersion = '0.2.0', shell?: { version: string; data: Uint8Array }) {
+  const data = await bundle(version, minShellVersion)
+  const artifacts = [{ kind: 'bundle', version, file: `bundle-${version}.json`, data }]
+  if (shell) artifacts.push({ kind: 'shell', platform: 'win-x64', version: shell.version, file: `Setup-${shell.version}.exe`, data: shell.data } as never)
+  const files: Record<string, unknown> = { 'lwtree/keys.json': KEYS_JSON, 'lwtree/test.json': channel(artifacts) }
+  for (const a of artifacts) files[a.file] = a.data
+  return files
 }
-function store(
-  files: Record<string, unknown>,
-  shellVersion = '0.2.0',
-  dir = mkdtempSync(path.join(tmpdir(), 'lwtree-bundles-')),
-) {
+function store(files: Record<string, unknown>, shellVersion = '0.2.0', dir = mkdtempSync(path.join(tmpdir(), 'lwtree-bundles-'))) {
   return new BundleStore({
     dir,
     baseDir: site('base'),
     baseVersion: '2026.1019.100000',
     shellVersion,
-    keys: KEYS,
-    updateUrl: 'https://updates.test',
-    channel: 'test',
+    trusted: {
+      base: 'https://updates.test',
+      product: 'lwtree',
+      channel: 'test',
+      platform: 'win-x64',
+      rootKeys: [{ id: 'root.test.1', ed25519: root.raw }],
+      keysVersion: 1,
+    },
     fetch: server(files),
   })
 }
 const served = (s: BundleStore) => readFileSync(path.join(s.activeDir, 'index.html'), 'utf8')
 
+// The legacy signed wrapper: shells up to 0.3.7 still read it (scripts/publish-bundle.mjs).
 test('opens a bundle signed with a trusted key, and nothing else', async () => {
-  const b = await bundle('2026.1019.120000')
+  const payload = await packBundle(site('x'), { version: '2026.1019.120000', minShellVersion: '0.2.0', releaseDate: '' })
+  const b = signBundle(payload, 'k1', ours.priv)
   assert.equal(openBundle(b, KEYS).version, '2026.1019.120000')
   const tampered: SignedBundle = {
     ...b,
     payload: b.payload.replace('2026.1019.120000', '2026.1019.130000'),
   }
   assert.throws(() => openBundle(tampered, KEYS), /signature does not match/)
-  const forged = await bundle('2026.1019.120000', '0.2.0', theirs.priv)
-  assert.throws(() => openBundle(forged, KEYS), /signature does not match/)
+  assert.throws(() => openBundle(signBundle(payload, 'k1', theirs.priv), KEYS), /signature does not match/)
   assert.throws(() => openBundle({ ...b, key: 'k9' }, KEYS), /unknown key/)
 })
 
@@ -113,10 +144,7 @@ test('refuses a damaged file or a path out of the bundle', async () => {
 })
 
 test('installs a newer bundle for the next start, and serves it once restarted into', async () => {
-  const s = store({
-    'bundle/test.json': info('2026.1019.120000'),
-    'bundle/2026.1019.120000.json': await bundle('2026.1019.120000'),
-  })
+  const s = store(await offering('2026.1019.120000'))
   await s.start()
   assert.equal(served(s), '<html>base</html>')
   const st = await s.check()
@@ -127,38 +155,13 @@ test('installs a newer bundle for the next start, and serves it once restarted i
   assert.equal(served(s), '<html>site 2026.1019.120000</html>')
 })
 
-test('installs nothing older, equal, unsigned or for a newer shell', async () => {
+test('installs nothing older, equal or for a newer shell', async () => {
   for (const [files, why] of [
-    [
-      {
-        'bundle/test.json': info('2026.1019.090000'),
-        'bundle/2026.1019.090000.json': await bundle('2026.1019.090000'),
-      },
-      'older',
-    ],
-    [
-      {
-        'bundle/test.json': info('2026.1019.100000'),
-        'bundle/2026.1019.100000.json': await bundle('2026.1019.100000'),
-      },
-      'equal',
-    ],
-    [
-      {
-        'bundle/test.json': info('2026.1019.120000'),
-        'bundle/2026.1019.120000.json': await bundle('2026.1019.120000', '0.2.0', theirs.priv),
-      },
-      'their key',
-    ],
-    [
-      {
-        'bundle/test.json': info('2026.1019.120000', '0.9.0'),
-        'bundle/2026.1019.120000.json': await bundle('2026.1019.120000', '0.9.0'),
-      },
-      'newer shell',
-    ],
+    [await offering('2026.1019.090000'), 'older'],
+    [await offering('2026.1019.100000'), 'equal'],
+    [await offering('2026.1019.120000', '0.9.0'), 'newer shell'],
   ] as const) {
-    const s = store(files as Record<string, unknown>)
+    const s = store(files)
     await s.start()
     const st = await s.check()
     assert.equal(st.ready, undefined, why)
@@ -166,36 +169,39 @@ test('installs nothing older, equal, unsigned or for a newer shell', async () =>
   }
 })
 
-test('a bundle announced as one version but signed as another is refused', async () => {
-  const s = store({
-    'bundle/test.json': info('2026.1019.150000'),
-    'bundle/2026.1019.150000.json': await bundle('2026.1019.120000'),
-  })
+test('a download that is not what the signed channel file names is refused', async () => {
+  const files = await offering('2026.1019.120000')
+  files['bundle-2026.1019.120000.json'] = await bundle('2026.1019.130000')
+  const s = store(files)
   await s.start()
-  assert.match((await s.check()).error ?? '', /not the version announced/)
+  const st = await s.check()
+  assert.match(st.error ?? '', /not the one announced \(file-(size|sha256)\)/)
+  assert.equal(st.ready, undefined)
+})
+
+test('a channel file signed by a key trusted-updates does not vouch for: refused, and said', async () => {
+  const files = await offering('2026.1019.120000')
+  files['lwtree/test.json'] = channel([{ kind: 'bundle', version: '2026.1019.120000', file: 'bundle-2026.1019.120000.json', data: files['bundle-2026.1019.120000.json'] as Uint8Array }], [], theirs.key)
+  const s = store(files)
+  await s.start()
+  const st = await s.check()
+  assert.equal(st.unconfirmed, 'channel-signature')
+  assert.match(st.error ?? '', /^Couldn't confirm this app is up to date \(channel-signature\)/)
+  assert.equal(st.ready, undefined)
+  // No trusted-updates at all: the same, said.
+  const gone = store({})
+  await gone.start()
+  assert.equal((await gone.check()).unconfirmed, 'fetch')
 })
 
 /** Until a newer shell fetched in the background is in, or refused. */
 async function settled(s: BundleStore) {
-  for (let i = 0; i < 200 && s.state.shell?.fetching; i++)
-    await new Promise((r) => setTimeout(r, 10))
+  for (let i = 0; i < 200 && s.state.shell?.fetching; i++) await new Promise((r) => setTimeout(r, 10))
 }
 
 test('a bundle that needs a newer shell brings the shell, checked before it may run', async () => {
   const exe = Buffer.from('MZ pretend installer')
-  const shell = {
-    version: '0.9.0',
-    url: 'app/setup.exe',
-    size: exe.length,
-    sha256: sha256(exe),
-    key: 'k1',
-    signature: signFile(exe, ours.priv),
-  }
-  const files = {
-    'bundle/test.json': info('2026.1019.120000', '0.9.0', shell),
-    'bundle/2026.1019.120000.json': await bundle('2026.1019.120000', '0.9.0'),
-    'app/setup.exe': exe,
-  }
+  const files = await offering('2026.1019.120000', '0.9.0', { version: '0.9.0', data: exe })
   const s = store(files)
   await s.start()
   // Fetched in the background: the check does not wait for it.
@@ -204,27 +210,43 @@ test('a bundle that needs a newer shell brings the shell, checked before it may 
   await settled(s)
   assert.deepEqual(st.shell, { version: '0.9.0', needed: true, downloaded: true, fetching: false })
   assert.ok(s.installer && readFileSync(s.installer).equals(exe))
-  // Signed by someone else: refused.
-  const forged = store({
-    ...files,
-    'bundle/test.json': info('2026.1019.120000', '0.9.0', {
-      ...shell,
-      signature: signFile(exe, theirs.priv),
-    }),
-  })
-  await forged.start()
-  await forged.check()
-  await settled(forged)
-  assert.match(forged.state.error ?? '', /not signed by us/)
-  assert.equal(forged.installer, undefined)
+  // A download that is not the one announced: refused.
+  const swapped = store({ ...files, 'Setup-0.9.0.exe': Buffer.from('MZ something else!!') })
+  await swapped.start()
+  await swapped.check()
+  await settled(swapped)
+  assert.match(swapped.state.error ?? '', /not the one announced/)
+  assert.equal(swapped.installer, undefined)
+})
+
+test('a bundle it runs that was withdrawn is moved off, to the one offered, older or not', async () => {
+  const dir = mkdtempSync(path.join(tmpdir(), 'lwtree-bundles-'))
+  const bad = await bundle('2026.1019.120000')
+  const a = store(await offering('2026.1019.120000'), '0.2.0', dir)
+  await a.start()
+  await a.check()
+  assert.ok(a.activate())
+  await a.good()
+  // Withdrawn; the channel offers an older one.
+  const older = await bundle('2026.1019.110000')
+  const files: Record<string, unknown> = {
+    'lwtree/keys.json': KEYS_JSON,
+    'lwtree/test.json': channel([{ kind: 'bundle', version: '2026.1019.110000', file: 'bundle-2026.1019.110000.json', data: older }], [{ kind: 'bundle', version: '2026.1019.120000', sha256: sha256(bad) }]),
+    'bundle-2026.1019.110000.json': older,
+  }
+  const b = store(files, '0.2.0', dir)
+  await b.start()
+  assert.equal(served(b), '<html>site 2026.1019.120000</html>')
+  const st = await b.check()
+  assert.equal(st.error, undefined)
+  assert.equal(st.ready, '2026.1019.110000')
+  assert.ok(b.activate())
+  assert.equal(served(b), '<html>site 2026.1019.110000</html>')
 })
 
 test('rolls back a bundle that never says it started, and does not take it again', async () => {
   const dir = mkdtempSync(path.join(tmpdir(), 'lwtree-bundles-'))
-  const files = {
-    'bundle/test.json': info('2026.1019.120000'),
-    'bundle/2026.1019.120000.json': await bundle('2026.1019.120000'),
-  }
+  const files = await offering('2026.1019.120000')
   const a = store(files, '0.2.0', dir)
   await a.start()
   await a.check()
@@ -240,10 +262,7 @@ test('rolls back a bundle that never says it started, and does not take it again
 
 test('a bundle that reports good stays, and a partial one is never served', async () => {
   const dir = mkdtempSync(path.join(tmpdir(), 'lwtree-bundles-'))
-  const files = {
-    'bundle/test.json': info('2026.1019.120000'),
-    'bundle/2026.1019.120000.json': await bundle('2026.1019.120000'),
-  }
+  const files = await offering('2026.1019.120000')
   const a = store(files, '0.2.0', dir)
   await a.start()
   await a.check()
@@ -257,19 +276,4 @@ test('a bundle that reports good stays, and a partial one is never served', asyn
   const broken = store(files, '0.2.0', dir)
   await broken.start()
   assert.equal(served(broken), '<html>base</html>')
-})
-
-test('a channel file names its files under the update server, or by whole URL elsewhere', () => {
-  assert.equal(
-    at('https://xcom.innonova.ch', 'bundle/1.json'),
-    'https://xcom.innonova.ch/bundle/1.json',
-  )
-  assert.equal(
-    at('https://cdn.example/lwtree', 'app/Setup.exe'),
-    'https://cdn.example/lwtree/app/Setup.exe',
-  )
-  assert.equal(
-    at('https://xcom.aek.dk', 'https://downloads.example/Setup-0.4.0.exe'),
-    'https://downloads.example/Setup-0.4.0.exe',
-  )
 })

@@ -1,7 +1,7 @@
 {
   "name": "lwtree-desktop",
   "productName": "Long War Tech Tree",
-  "version": "0.3.7",
+  "version": "0.4.0",
   "description": "The Long War Tech Tree site as a Windows app, with the game's files in reach (features/desktop-app.md)",
   "private": true,
   "main": "dist/main.js",

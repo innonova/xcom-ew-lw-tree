@@ -61,13 +61,21 @@ const FEATURES: { title: string; text: string; shot: string; alt: string }[] = [
           mods and the game’s settings, and keeps the originals of every file it changes.
         </p>
         <p class="download">
-          <a v-if="installer.name" class="get" :href="`${APP_DIR}${installer.name}`" download>
+          <a v-if="installer.url" class="get" :href="installer.url" download>
             Download for Windows<template v-if="installer.version">
               · {{ installer.version }}</template
             >
           </a>
           <span v-else class="muted">The installer is not on this copy of the site.</span>
-          <a v-if="installer.name" :href="`${APP_DIR}SHA256SUMS`" target="_blank" class="small"
+          <a
+            v-if="installer.release"
+            :href="installer.release"
+            target="_blank"
+            rel="noopener"
+            class="small"
+            >where it came from</a
+          >
+          <a v-else-if="installer.url" :href="`${APP_DIR}SHA256SUMS`" target="_blank" class="small"
             >checksum</a
           >
         </p>
