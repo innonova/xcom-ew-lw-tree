@@ -256,3 +256,16 @@ links the newest staging installer on GitHub, as a release's links its own
 (`VITE_LWTREE_INSTALLER`, from `gh` at deploy). The key file
 `~/.config/lwtree/bundle-key.pem` is still on this machine, trusted by
 nothing now; deleting it is the person's call. Desktop tests: 78 of 78.
+
+## Report (2026-10-29, a shell only when it is new)
+
+v1.2.0 carried a fresh build of shell 0.4.0, which production already
+served; trusted-updates would refuse its approval ("shell/win-x64 0.4.0 is not
+newer than 0.4.0: clients would not take it"), and takes a release only once.
+`release.yml` now builds an installer only for a shell version no release of
+the channel's kind has yet (`installer` by hand still forces one, for
+staging); the website links the installer production serves (the first
+release that has it). v1.2.1: the bundle alone, manifest
+`["production"]`, bundle 2026.1029.105355. The person rejects v1.2.0 in
+trusted-updates and approves v1.2.1. xcom.aek.dk stays at v1.2.0 (the same
+site; its link is v1.2.0's installer, a signed build of the same 0.4.0).
