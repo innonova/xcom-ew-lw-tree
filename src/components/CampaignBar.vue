@@ -12,6 +12,7 @@ import {
 } from '@/model/bonuses'
 import { pointsPerHour, projectEtaDays } from '@/model/research'
 import { campaignStats } from '@/model/stats'
+import { councilOperations, type MissionState } from '@/model/operations'
 import {
   bonuses,
   campaign,
@@ -105,6 +106,19 @@ const upkeepText = (lines: { name: string; count: number; each: number }[]) =>
 // Long War's hidden counters and the usual figures, opened from the bar.
 const showStats = ref(false)
 const stats = computed(() => (campaign.value ? campaignStats(campaign.value) : undefined))
+
+// Operation Slingshot and Operation Progeny (features/council-operations.md).
+const showOps = ref(false)
+const operations = computed(() => (campaign.value ? councilOperations(campaign.value) : undefined))
+const STATE: Record<MissionState, [mark: string, label: string]> = {
+  won: ['✓', 'won'],
+  map: ['●', 'on the map'],
+  next: ['→', 'next'],
+  later: ['·', 'later'],
+  lost: ['✗', 'lost'],
+  played: ['✓', 'played'],
+  ended: ['–', 'not coming'],
+}
 
 // The campaign's bonuses, opened from the bar.
 const showBonuses = ref(false)
@@ -369,6 +383,38 @@ const where = (b: Bonus) => (b.type === 'continent' ? b.continent : b.country)
         </p>
       </div>
     </span>
+    <span v-if="operations" class="bonus-anchor">
+      <button type="button" class="link" :aria-expanded="showOps" @click="showOps = !showOps">
+        Operations
+      </button>
+      <div
+        v-if="showOps"
+        class="bonuses ops"
+        role="dialog"
+        aria-label="Operation Slingshot and Operation Progeny"
+      >
+        <button type="button" class="close" aria-label="Close" @click="showOps = false">×</button>
+        <template v-for="op in operations" :key="op.name">
+          <h3>
+            {{ op.name }} <span class="where">· {{ op.country }}</span>
+          </h3>
+          <ol v-if="op.on">
+            <li v-for="m in op.missions" :key="m.id" :class="m.state">
+              <span class="mark" aria-hidden="true">{{ STATE[m.state][0] }}</span>
+              <strong>{{ m.name }}</strong>
+              <span class="state">{{ STATE[m.state][1] }}</span>
+              <div v-if="m.when" class="desc">{{ m.when }}</div>
+            </li>
+          </ol>
+          <p v-if="op.note" class="desc note">{{ op.note }}</p>
+        </template>
+        <p class="foot">
+          From the save and the game's own script. A mission failed or left to expire ends its
+          operation for the campaign. Slingshot keeps its own calendar; Progeny's missions take the
+          place of an ordinary council mission, whose time the game has already drawn.
+        </p>
+      </div>
+    </span>
     <span class="bonus-anchor">
       <button
         type="button"
@@ -630,6 +676,53 @@ const where = (b: Bonus) => (b.type === 'continent' ? b.continent : b.country)
 .desc {
   font-size: 12.5px;
   color: var(--muted);
+}
+.ops {
+  width: 460px;
+}
+.ops ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ops li {
+  display: grid;
+  grid-template-columns: 16px auto 1fr;
+  column-gap: 6px;
+  align-items: baseline;
+  padding: 3px 0;
+}
+.ops li .desc {
+  grid-column: 2 / -1;
+}
+.ops .mark {
+  color: var(--muted);
+  text-align: center;
+}
+.ops .state {
+  font-size: 12px;
+  color: var(--muted);
+}
+.ops .won .mark,
+.ops .won .state,
+.ops .played .mark {
+  color: var(--done-text);
+}
+.ops .map .mark,
+.ops .map .state,
+.ops .next .mark {
+  color: var(--accent);
+}
+.ops .lost .mark,
+.ops .lost .state {
+  color: #ff8a8a;
+}
+.ops .ended strong {
+  color: var(--muted);
+  font-weight: 400;
+}
+.ops .note {
+  margin: 4px 0 2px;
 }
 .bonuses .foot {
   margin: 10px 0 0;

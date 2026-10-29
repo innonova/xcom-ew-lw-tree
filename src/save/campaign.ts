@@ -43,6 +43,31 @@ export interface Interceptor {
   continent: number
 }
 
+/**
+ * The council's two DLC operations as the save keeps them (XGFundingCouncil;
+ * features/council-operations.md). Missions by the game's name without the
+ * eFCM_ prefix ("Slingshot_LowFriends"); the chain's end is "SLINGSHOT_END" or
+ * "PROGENY_END".
+ */
+export interface CouncilState {
+  slingshotOn: boolean
+  progenyOn: boolean
+  nextSlingshot: string
+  lastSlingshot: string
+  /** Days from the campaign's start when the next Slingshot mission comes; −1 until the next daily check sets it. */
+  nextSlingshotDay: number
+  nextProgeny: string
+  furiesWon: boolean
+  /** Hours until the next council mission (from 9000 up: none more this month). */
+  countdownHours: number
+  /** Every council mission so far, in order (m_arrPreviousMissions). */
+  past: string[]
+  /** Council missions on the map: which, and the half hours left (m_iDuration). */
+  onMap: { mission: string; halfHours: number }[]
+  /** The campaign's first day (XGStrategyAI.m_kStartDate). */
+  start?: { year: number; month: number; day: number }
+}
+
 export interface Campaign {
   /** The save's description, without the colour markup LWR puts in it. */
   description: string
@@ -113,6 +138,7 @@ export interface Campaign {
   interceptors: Interceptor[]
   /** The end-of-campaign statistics, by name without the eRecap_ prefix. */
   recap: Record<string, number>
+  council?: CouncilState
 }
 
 export class NotACampaignError extends Error {}
@@ -221,6 +247,17 @@ function interceptors(
       },
     ]
   })
+}
+
+/** An enum value's name without its prefix ("eFCM_Progeny_Deluge" → "Progeny_Deluge"). */
+function enumName(p: Property | undefined, prefix: string): string | undefined {
+  return p?.kind === 'ByteProperty' ? p.value.replace(prefix, '') : undefined
+}
+
+function enumList(p: Property | undefined, prefix: string): string[] {
+  return p?.kind === 'ArrayProperty' && 'enum_values' in p
+    ? p.enum_values.map((e) => e.value.replace(prefix, ''))
+    : []
 }
 
 function structField(p: Property | undefined, name: string): Property | undefined {
@@ -366,5 +403,41 @@ export function readCampaign(save: SaveFile): Campaign {
     everHad: numbers(prop(byClass('XGStorage'), 'm_arrItemArchives')),
     craftEncounters: numbers(prop(byClass('XGGeoscape'), 'm_arrCraftEncounters')),
     interceptors: interceptors(prop(byClass('XGFacility_Hangar'), 'm_arrInts'), deref),
+    council: councilState(byClass('XGFundingCouncil') ?? byClass('XGFundingCouncil_Mod')),
+  }
+
+  function councilState(fc: Checkpoint | undefined): CouncilState | undefined {
+    const nextSlingshot = enumName(prop(fc, 'm_eNextSlingshotMission'), 'eFCM_')
+    const nextProgeny = enumName(prop(fc, 'm_eNextProgenyMission'), 'eFCM_')
+    if (!fc || !nextSlingshot || !nextProgeny) return undefined
+    const bool = (n: string) => {
+      const p = prop(fc, n)
+      return p?.kind === 'BoolProperty' && p.value
+    }
+    const startDate = deref(prop(byClass('XGStrategyAI'), 'm_kStartDate'))
+    const sy = int(prop(startDate, 'm_iYear'))
+    const sm = int(prop(startDate, 'm_iMonth'))
+    const sd = int(prop(startDate, 'm_iDay'))
+    return {
+      slingshotOn: bool('m_bSlingshotEnabled'),
+      progenyOn: bool('m_bProgenyEnabled'),
+      nextSlingshot,
+      lastSlingshot: enumName(prop(fc, 'm_eLastSlingshotMission'), 'eFCM_') ?? 'SLINGSHOT_START',
+      nextSlingshotDay: int(prop(fc, 'm_iNextSlingshotDay')) ?? -1,
+      nextProgeny,
+      furiesWon: bool('m_bFuriesWon'),
+      countdownHours: int(prop(fc, 'm_iFirstRequestCountdown')) ?? 9999,
+      past: enumList(prop(fc, 'm_arrPreviousMissions'), 'eFCM_'),
+      onMap: table
+        .filter((cp) => cp.class_name.endsWith('.XGMission_FundingCouncil'))
+        .map((m) => ({
+          mission: enumName(structField(prop(m, 'm_kTMission'), 'eMission'), 'eFCM_') ?? '',
+          halfHours: int(prop(m, 'm_iDuration')) ?? 0,
+        })),
+      start:
+        sy !== undefined && sm !== undefined && sd !== undefined
+          ? { year: sy, month: sm, day: sd }
+          : undefined,
+    }
   }
 }
