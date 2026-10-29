@@ -13,9 +13,10 @@
 #     push to main  -> "staging" (testers): a prerelease build-<run>, signed at once.
 #                      The installer only when no release has its version yet
 #                      (or asked for, running this by hand).
-#     tag v*        -> "production": the release v*, with an installer always
-#                      (the website links it), signed once a person approves it
-#                      in trusted-updates' admin UI.
+#     tag v*        -> "production": the release v*, with an installer when no
+#                      release has its version yet (the website links the one
+#                      production serves), signed once a person approves it in
+#                      trusted-updates' admin UI.
 #   An installer's update.json names its channel, so a tag's installer is not
 #   offered on staging: it would move a tester's app to production.
 #
@@ -40,7 +41,7 @@ on:
   workflow_dispatch:
     inputs:
       installer:
-        description: Build an installer even if its version was released already
+        description: Build an installer even if its version was released already (staging only; trusted-updates refuses a shell that is not newer)
         type: boolean
         default: false
 permissions:
@@ -57,6 +58,7 @@ jobs:
       channel: ${{ steps.plan.outputs.channel }}
       shell: ${{ steps.plan.outputs.shell }}
       installer: ${{ steps.plan.outputs.installer }}
+      installer_url: ${{ steps.plan.outputs.installer_url }}
     steps:
       - uses: actions/checkout@v7
       - id: plan
@@ -65,17 +67,25 @@ jobs:
           FORCE: ${{ inputs.installer }}
         run: |
           shell=$(node -p "require('./desktop/package.json').version")
+          exe="LongWarTechTree-Setup-$shell.exe"
+          # The first release of the channel's kind (production: a release, staging: a
+          # prerelease) that has this version's installer. A channel takes a shell only
+          # when it is newer than the one it serves (trusted-updates refuses the rest),
+          # so a version already out is not built again: the bundle goes alone.
+          first_with() {
+            gh api --paginate "repos/$GITHUB_REPOSITORY/releases?per_page=100" \
+              --jq ".[] | select(.prerelease == $1 and .tag_name != \"$GITHUB_REF_NAME\") | select(any(.assets[]; .name == \"$exe\")) | .tag_name" | tail -1
+          }
           if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
-            tag=$GITHUB_REF_NAME channel=production installer=true
+            tag=$GITHUB_REF_NAME channel=production out=$(first_with false)
           else
-            tag=build-$GITHUB_RUN_NUMBER channel=staging installer=true
-            # A staging installer of this version already out: the bundle alone.
-            if [[ "$FORCE" != true ]] && gh api --paginate "repos/$GITHUB_REPOSITORY/releases?per_page=100" \
-                --jq '.[] | select(.prerelease) | .assets[].name' | grep -qxF "LongWarTechTree-Setup-$shell.exe"; then
-              installer=false
-            fi
+            tag=build-$GITHUB_RUN_NUMBER channel=staging out=$(first_with true)
           fi
-          printf 'tag=%s\nchannel=%s\nshell=%s\ninstaller=%s\n' "$tag" "$channel" "$shell" "$installer" | tee -a "$GITHUB_OUTPUT"
+          installer=true from=$tag
+          if [[ -n "$out" && "$FORCE" != true ]]; then installer=false from=$out; fi
+          # The website links the installer its channel serves.
+          url="https://github.com/$GITHUB_REPOSITORY/releases/download/$from/$exe"
+          printf 'tag=%s\nchannel=%s\nshell=%s\ninstaller=%s\ninstaller_url=%s\n' "$tag" "$channel" "$shell" "$installer" "$url" | tee -a "$GITHUB_OUTPUT"
 
   site:
     needs: plan
@@ -97,7 +107,7 @@ jobs:
       # On a tag, the website's download link: this release's installer.
       - run: npm run build
         env:
-          VITE_LWTREE_INSTALLER: ${{ startsWith(github.ref, 'refs/tags/v') && format('https://github.com/{0}/releases/download/{1}/LongWarTechTree-Setup-{2}.exe', github.repository, needs.plan.outputs.tag, needs.plan.outputs.shell) || '' }}
+          VITE_LWTREE_INSTALLER: ${{ startsWith(github.ref, 'refs/tags/v') && needs.plan.outputs.installer_url || '' }}
       - name: the app's own tests (the update checks against trusted-updates' vectors)
         working-directory: desktop
         run: npm ci && npm run build && npm test
