@@ -4,29 +4,18 @@ import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'nod
 import { tmpdir } from 'node:os'
 import path from 'node:path'
 import { test } from 'node:test'
-import {
-  openBundle,
-  packBundle,
-  sha256,
-  signBundle,
-  unpack,
-  type SignedBundle,
-} from './bundle-format'
+import { packBundle, sha256, unpack } from './bundle-format'
 import { BundleStore, type Fetch } from './bundles'
 
 const pair = () => {
   const { privateKey, publicKey } = generateKeyPairSync('ed25519')
   return {
-    priv: privateKey.export({ type: 'pkcs8', format: 'pem' }).toString(),
-    pub: publicKey.export({ type: 'spki', format: 'pem' }).toString(),
     /** The 32 raw bytes, base64, as trusted-updates writes keys. */
     raw: publicKey.export({ type: 'spki', format: 'der' }).subarray(12).toString('base64'),
     key: privateKey,
   }
 }
-const ours = pair()
 const theirs = pair()
-const KEYS = { k1: ours.pub }
 // trusted-updates in miniature (trusted.ts): a root key, and the channel's key it vouches for.
 const root = pair()
 const channelKey = pair()
@@ -116,20 +105,6 @@ function store(files: Record<string, unknown>, shellVersion = '0.2.0', dir = mkd
   })
 }
 const served = (s: BundleStore) => readFileSync(path.join(s.activeDir, 'index.html'), 'utf8')
-
-// The legacy signed wrapper: shells up to 0.3.7 still read it (scripts/publish-bundle.mjs).
-test('opens a bundle signed with a trusted key, and nothing else', async () => {
-  const payload = await packBundle(site('x'), { version: '2026.1019.120000', minShellVersion: '0.2.0', releaseDate: '' })
-  const b = signBundle(payload, 'k1', ours.priv)
-  assert.equal(openBundle(b, KEYS).version, '2026.1019.120000')
-  const tampered: SignedBundle = {
-    ...b,
-    payload: b.payload.replace('2026.1019.120000', '2026.1019.130000'),
-  }
-  assert.throws(() => openBundle(tampered, KEYS), /signature does not match/)
-  assert.throws(() => openBundle(signBundle(payload, 'k1', theirs.priv), KEYS), /signature does not match/)
-  assert.throws(() => openBundle({ ...b, key: 'k9' }, KEYS), /unknown key/)
-})
 
 test('refuses a damaged file or a path out of the bundle', async () => {
   const payload = await packBundle(site('x'), {

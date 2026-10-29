@@ -4,7 +4,7 @@
 // what it works with. Screenshots: public/desktop/, made by scripts/site-shots.sh.
 
 import { onMounted } from 'vue'
-import { APP_DIR, findInstaller, installer } from '@/state/installer'
+import { findInstaller, installer } from '@/state/installer'
 
 onMounted(findInstaller)
 
@@ -74,9 +74,6 @@ const FEATURES: { title: string; text: string; shot: string; alt: string }[] = [
             rel="noopener"
             class="small"
             >where it came from</a
-          >
-          <a v-else-if="installer.url" :href="`${APP_DIR}SHA256SUMS`" target="_blank" class="small"
-            >checksum</a
           >
         </p>
         <p class="small muted">

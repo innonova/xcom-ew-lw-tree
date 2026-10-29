@@ -244,3 +244,15 @@ legacy half of `deploy.sh`, `bundle-format.ts`'s signing).
   `bundle-format.ts`). The bench, the only 0.3.7 we know of, has moved;
   retiring them is a small change for when the person says no other 0.3.x
   is out there.
+
+## Report (2026-10-29, the old path retired)
+
+The person: "there are no more 0.3.x installs now". Removed: the signing half
+of `bundle-format.ts`, `scripts/publish-bundle.mjs`,
+`scripts/make-bundle-key.mjs`, `deploy/publish-desktop.sh`, and the legacy
+half of `deploy/deploy.sh`; staging's `bundle/` and `app/` are gone from
+xcom.innonova.ch (the deploy's `--delete-after`). Staging's download page now
+links the newest staging installer on GitHub, as a release's links its own
+(`VITE_LWTREE_INSTALLER`, from `gh` at deploy). The key file
+`~/.config/lwtree/bundle-key.pem` is still on this machine, trusted by
+nothing now; deleting it is the person's call. Desktop tests: 78 of 78.
