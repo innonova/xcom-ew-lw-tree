@@ -18,6 +18,7 @@
     "test:desktop": "node scripts/test-desktop.mjs"
   },
   "dependencies": {
+    "@innonova/upkit": "github:innonova/upkit#69757e39e1db26d62fd157bb31465141deef4081",
     "vue": "^3.5.42"
   },
   "devDependencies": {

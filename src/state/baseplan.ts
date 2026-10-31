@@ -13,8 +13,8 @@
 // have it and the app knows what it is.
 
 import { iniBytes, iniText, mergeIni, setIniValues } from '@/model/inifile'
-import { isUpkmod, runScript, scriptPackages } from '@/model/modpatch'
-import { scriptPackage, type Package } from '@/model/upk'
+import { isUpkmod, runScript, scriptPackages } from '@innonova/upkit/modpatch'
+import { scriptPackage, type Package } from '@innonova/upkit/upk'
 import { applySettings } from '@/model/gamesettings'
 import { hashOf, sha256, type CopySource, type GameFiles } from './gamefiles'
 import { upkmodRunnerFor } from './upkmod'

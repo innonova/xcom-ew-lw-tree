@@ -8,7 +8,7 @@
 
 import { computed, ref, watch } from 'vue'
 import { GAMES } from '@/model/game'
-import { optionProblem, scriptFor, type ModTarget } from '@/model/patchupk'
+import { optionProblem, scriptFor, type ModTarget } from '@innonova/upkit/patchupk'
 import {
   addModFiles,
   checkKey,

@@ -2,9 +2,9 @@ import { createHash } from 'node:crypto'
 import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { lzoDecompress } from '../lzo'
+import { lzoDecompress } from '@innonova/upkit/lzo'
 import { decodeImage, largestMip, readTexture } from '../texture'
-import { Package, decompressPackage, exportPath } from '../upk'
+import { Package, decompressPackage, exportPath } from '@innonova/upkit/upk'
 
 const text = (b: Uint8Array) => new TextDecoder().decode(b)
 const bytes = (...xs: (number | string)[]) =>

@@ -3,7 +3,7 @@ import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import type { GameFiles } from '../gamefiles'
-import { PKG_STORE_COMPRESSED, Package, scriptPackage } from '@/model/upk'
+import { PKG_STORE_COMPRESSED, Package, scriptPackage } from '@innonova/upkit/upk'
 import {
   BACKUP,
   MANIFEST,
@@ -351,10 +351,10 @@ describe.skipIf(!existsSync(resolve(lwCooked, 'XComStrategyGame.upk')))('a .upkm
       ),
     )
   const mod = async (edit: (src: string) => string, name: string) => {
-    const { Linker } = await import('../../../upkit/src/linker.ts')
-    const { openPackage } = await import('../../../upkit/src/package.ts')
-    const { decompileClass } = await import('../../../upkit/src/classdecomp.ts')
-    const { writeUpkmod } = await import('../../../upkit/src/upkmod.ts')
+    const { Linker } = await import('@innonova/upkit/linker')
+    const { openPackage } = await import('@innonova/upkit/package')
+    const { decompileClass } = await import('@innonova/upkit/classdecomp')
+    const { writeUpkmod } = await import('@innonova/upkit/upkmod')
     const pkg = openPackage(read(resolve(lwCooked, 'XComStrategyGame.upk')))
     const linker = new Linker([lwCooked])
     linker.add('XComStrategyGame', pkg)
@@ -373,9 +373,9 @@ describe.skipIf(!existsSync(resolve(lwCooked, 'XComStrategyGame.upk')))('a .upkm
     expect(plan.changes.map((x) => [x.path, x.why])).toEqual([['CookedPCConsole/XComStrategyGame.upk', ['Double labs']]])
     await applyPlan(g, plan)
     // The function as the mod says.
-    const { Linker } = await import('../../../upkit/src/linker.ts')
-    const { openPackage } = await import('../../../upkit/src/package.ts')
-    const { readableSource } = await import('../../../upkit/src/fidelity.ts')
+    const { Linker } = await import('@innonova/upkit/linker')
+    const { openPackage } = await import('@innonova/upkit/package')
+    const { readableSource } = await import('@innonova/upkit/fidelity')
     const written = openPackage(g.map.get('CookedPCConsole/XComStrategyGame.upk')!)
     const linker = new Linker([lwCooked])
     linker.add('XComStrategyGame', written)

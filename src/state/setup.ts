@@ -11,9 +11,9 @@
 // page last wrote (the game was reinstalled, or another tool changed it), the
 // file as it now is becomes the new original.
 
-import { isUpkmod, runScript, scriptPackages } from '@/model/modpatch'
+import { isUpkmod, runScript, scriptPackages } from '@innonova/upkit/modpatch'
 import { iniBytes, iniText, mergeIni, setIniValues, type IniChange } from '@/model/inifile'
-import { scriptPackage, type Package } from '@/model/upk'
+import { scriptPackage, type Package } from '@innonova/upkit/upk'
 import { applySettings, type SettingDef } from '@/model/gamesettings'
 import { hashOf, sha256, type CopySource, type GameFiles } from './gamefiles'
 import { upkmodRunnerFor } from './upkmod'

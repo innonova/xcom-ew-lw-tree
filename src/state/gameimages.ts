@@ -15,7 +15,7 @@
 
 import { reactive } from 'vue'
 import { decodeImage, largestMip, readTexture } from '@/model/texture'
-import { Package, decompressPackage, exportPath } from '@/model/upk'
+import { Package, decompressPackage, exportPath } from '@innonova/upkit/upk'
 import type { GameFiles } from './gamefiles'
 
 /** The packages, and what their texture paths start with. */

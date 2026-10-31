@@ -84,9 +84,9 @@ const INI_WINDOWS = String.raw`XCom-Enemy-Unknown\XEW\XComGame\Config\DefaultGam
       scripts/upk_airwar.py; odds are thousands of simulated fights. No save
       records a fight, so they are checked against the script, not history.
     - Tools (desktop app only, desktop/): state/tools.ts, state/desktop.ts,
-      state/setup.ts (plans, backups), model/upk.ts
-      (packages), model/modpatch.ts + model/pseudocode.ts (PatcherGUI scripts,
-      checked byte for byte against PatchUPK), model/inifile.ts;
+      state/setup.ts (plans, backups), upkit (innonova/upkit: packages,
+      PatcherGUI scripts checked byte for byte against PatchUPK, .upkmod),
+      model/inifile.ts;
       features/game-tools.md. The library folder (state/library.ts) and Long
       War / LWR put in by the app (state/baseplan.ts; desktop/src/inno.ts,
       lzma.ts, zip.ts, bases.ts read the installers; src/data/game-files.json

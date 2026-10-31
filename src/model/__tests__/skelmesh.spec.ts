@@ -3,7 +3,7 @@ import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { readAnimSet, readClip, sampleClip } from '../anim'
 import { posedBone, poseMesh, readSkelMesh, type LocalPose } from '../skelmesh'
-import { Package, decompressPackage } from '../upk'
+import { Package, decompressPackage } from '@innonova/upkit/upk'
 
 // The person's install (git-ignored samples/).
 const C = resolve(import.meta.dirname, '../../../samples/CookedPCConsole')

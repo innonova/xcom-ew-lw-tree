@@ -24,7 +24,7 @@ import {
   type SkelMesh,
 } from '@/model/skelmesh'
 import { decodeImage, readTexture, unchunk } from '@/model/texture'
-import { Package, decompressPackage, readEnum } from '@/model/upk'
+import { Package, decompressPackage, readEnum } from '@innonova/upkit/upk'
 import { desktop } from './desktop'
 import { contentKey, versionContent } from './tools'
 

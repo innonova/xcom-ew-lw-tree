@@ -5,7 +5,7 @@ import type { CopySource, GameFiles } from '../gamefiles'
 import { BACKUP, applyPlan, emptyManaged, type Managed, type Wanted } from '../setup'
 import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
-import { Package, scriptPackage } from '@/model/upk'
+import { Package, scriptPackage } from '@innonova/upkit/upk'
 
 const utf8 = (s: string) => new TextEncoder().encode(s)
 const str = (b: Uint8Array | undefined) => (b ? new TextDecoder().decode(b) : undefined)

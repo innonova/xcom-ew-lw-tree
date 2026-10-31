@@ -8,10 +8,10 @@
 // data: its source art and its mips, each as bulk data (flags, element
 // count, size on disk, offset in file, then the bytes when they are inline).
 
-import { unchunk } from './lzo'
+import { unchunk } from '@innonova/upkit/lzo'
 
 export { unchunk }
-import type { Package } from './upk'
+import type { Package } from '@innonova/upkit/upk'
 
 export interface TextureInfo {
   width: number

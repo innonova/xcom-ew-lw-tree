@@ -4,7 +4,7 @@
 // pose, normals, UVs). Layout of UE3 package version 845 on PC, as UE Viewer
 // (MIT licence) documents it; nothing copied.
 
-import type { Package } from './upk'
+import type { Package } from '@innonova/upkit/upk'
 
 export interface MeshBone {
   name: string

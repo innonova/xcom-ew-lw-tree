@@ -19,8 +19,8 @@ import {
   type FoundSetting,
 } from '@/model/gamesettings'
 import { iniEntries, iniText, setIniValues, type IniChange, type IniEntry } from '@/model/inifile'
-import { isUpkmod, runScript, scriptPackages, type RunResult, type Step } from '@/model/modpatch'
-import { parseModScript, type ModScript } from '@/model/patchupk'
+import { isUpkmod, runScript, scriptPackages, type RunResult, type Step } from '@innonova/upkit/modpatch'
+import { parseModScript, type ModScript } from '@innonova/upkit/patchupk'
 import {
   Package,
   decompressPackage,
@@ -30,7 +30,7 @@ import {
   readUpk,
   scriptPackage,
   type Upk,
-} from '@/model/upk'
+} from '@innonova/upkit/upk'
 import { planBase, type BaseLayer, type BaseSetup } from './baseplan'
 import { loadGameImages } from './gameimages'
 import { upkmodRunnerFor } from './upkmod'

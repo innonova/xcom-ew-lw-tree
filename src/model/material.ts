@@ -3,7 +3,7 @@
 // numbers), and the game's color palettes (UnitPalettes in Startup.upk:
 // armor tints, skin, hair). Tagged properties of UE3 package version 845.
 
-import type { Package } from './upk'
+import type { Package } from '@innonova/upkit/upk'
 
 export interface MaterialInstance {
   /** The parent material's name ("CHH_Soldiers"). */

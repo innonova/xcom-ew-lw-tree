@@ -3,7 +3,7 @@
 // compressed track data. UE3 package version 845, as UE Viewer (MIT)
 // documents the formats; nothing copied.
 
-import type { Package } from './upk'
+import type { Package } from '@innonova/upkit/upk'
 
 export type Quat = [number, number, number, number]
 export type Vec3 = [number, number, number]

@@ -1,8 +1,8 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
-import { optionProblem, parseModScript, scriptFor } from '../patchupk'
-import { exportsByPath, headerSizeOf, readUpk } from '../upk'
+import { optionProblem, parseModScript, scriptFor } from '@innonova/upkit/patchupk'
+import { exportsByPath, headerSizeOf, readUpk } from '@innonova/upkit/upk'
 import { fileKind, installKind } from '../../state/tools'
 
 // A script in the shape of wghost81's Soldier Gender Probability.
