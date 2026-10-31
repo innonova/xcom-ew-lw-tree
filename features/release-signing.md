@@ -1,8 +1,11 @@
 ---
-title: "Signing the desktop app's updates without a key anyone holds: attested builds, signed by the estate's trusted-updates"
-status: review
+title: "Signing the desktop app's updates without a key anyone holds: attested
+  builds, signed by the estate's trusted-updates"
+status: done
 priority: 2
-dependsOn: [production, desktop-updates]
+dependsOn:
+  - production
+  - desktop-updates
 ---
 
 ## Purpose

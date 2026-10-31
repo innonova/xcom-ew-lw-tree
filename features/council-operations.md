@@ -1,8 +1,8 @@
 ---
-title: "Operation Slingshot and Operation Progeny: which missions are done, and when the next comes"
-status: review
+title: "Operation Slingshot and Operation Progeny: which missions are done, and
+  when the next comes"
+status: done
 priority: 2
-dependsOn: []
 ---
 
 ## Purpose
