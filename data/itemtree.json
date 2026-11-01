@@ -1,5 +1,5 @@
 {
- "source": "Long War 1.0 XComStrategyGame.upk (XGItemTree.BuildItems); costs, time and engineers are ItemBalance_Normal in DefaultGameCore.ini; read by scripts/upk_itemtree.py",
+ "source": "Long War 1.0 XComStrategyGame.upk (XGItemTree.BuildItems, BuildFacilities); costs, time, engineers, upkeep and power are ItemBalance_Normal and FacilityBalance in DefaultGameCore.ini; read by scripts/upk_itemtree.py",
  "items": [
   {
    "id": 1,
@@ -1874,6 +1874,141 @@
    "item": {
     "id": 4,
     "enum": "eItem_Shotgun"
+   }
+  }
+ ],
+ "facilities": [
+  {
+   "id": 1,
+   "enum": "eFacility_Hangar",
+   "size": 2
+  },
+  {
+   "id": 2,
+   "enum": "eFacility_MissionControl",
+   "size": 2
+  },
+  {
+   "id": 3,
+   "enum": "eFacility_Barracks",
+   "size": 1
+  },
+  {
+   "id": 4,
+   "enum": "eFacility_Research",
+   "size": 1
+  },
+  {
+   "id": 5,
+   "enum": "eFacility_Engineering",
+   "size": 1
+  },
+  {
+   "id": 6,
+   "enum": "eFacility_AccessLift",
+   "size": 1
+  },
+  {
+   "id": 7,
+   "enum": "eFacility_ScienceLab",
+   "size": 1
+  },
+  {
+   "id": 8,
+   "enum": "eFacility_Workshop",
+   "size": 1
+  },
+  {
+   "id": 9,
+   "enum": "eFacility_SmallRadar",
+   "size": 1
+  },
+  {
+   "id": 10,
+   "enum": "eFacility_Power",
+   "size": 1
+  },
+  {
+   "id": 11,
+   "enum": "eFacility_Foundry",
+   "size": 1
+  },
+  {
+   "id": 12,
+   "enum": "eFacility_OTS",
+   "size": 1
+  },
+  {
+   "id": 13,
+   "enum": "eFacility_AlienContain",
+   "size": 1,
+   "tech": {
+    "id": 1,
+    "enum": "eTech_Xenobiology"
+   }
+  },
+  {
+   "id": 14,
+   "enum": "eFacility_LargeRadar",
+   "size": 1,
+   "tech": {
+    "id": 32,
+    "enum": "eTech_AlienNavigation"
+   }
+  },
+  {
+   "id": 15,
+   "enum": "eFacility_ThermalPower",
+   "size": 1
+  },
+  {
+   "id": 16,
+   "enum": "eFacility_EleriumGenerator",
+   "size": 1,
+   "tech": {
+    "id": 33,
+    "enum": "eTech_UFOPowerSource"
+   }
+  },
+  {
+   "id": 17,
+   "enum": "eFacility_PsiLabs",
+   "size": 1,
+   "tech": {
+    "id": 4,
+    "enum": "eTech_PsiLabs"
+   }
+  },
+  {
+   "id": 18,
+   "enum": "eFacility_HyperwaveRadar",
+   "size": 1,
+   "tech": {
+    "id": 7,
+    "enum": "eTech_Hyperwave"
+   }
+  },
+  {
+   "id": 19,
+   "enum": "eFacility_DeusEx",
+   "size": 1,
+   "tech": {
+    "id": 8,
+    "enum": "eTech_PsiLink"
+   }
+  },
+  {
+   "id": 22,
+   "enum": "eFacility_CyberneticsLab",
+   "size": 1
+  },
+  {
+   "id": 23,
+   "enum": "eFacility_GeneticsLab",
+   "size": 1,
+   "tech": {
+    "id": 13,
+    "enum": "eTech_Meld"
    }
   }
  ]

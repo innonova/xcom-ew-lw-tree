@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Extract what each item needs before engineering can build it from Long
-War's XComStrategyGame.upk into data/itemtree.json.
+"""Extract what each item and base facility needs before engineering can build
+it from Long War's XComStrategyGame.upk into data/itemtree.json.
 
     python3 scripts/upk_itemtree.py samples > data/itemtree.json
 
@@ -15,6 +15,11 @@ come from XGItemTree's compiled script (scripts/upk_script.py):
 - CanBeBuilt (XGItemTree.CanBuildItem): the tech researched, the Foundry
   project done; the item requirement is a cost, one consumed per item built
   (XGFacility_Engineering.GetItemProjectCost).
+- BuildFacilities: BuildFacility(iFacility, iCash, iElerium, iAlloy,
+  iMaintenance, iEngineers, iTime, iPower, iSize, eTechReq, eItemReq, iImage)
+  per base facility: its size (tiles) and the tech it needs (CanFacilityBeBuilt);
+  the costs, upkeep, days and power are FacilityBalance in DefaultGameCore.ini
+  (BalanceFacilities).
 
 Anything the script does not recognise stops it, so a changed rule is noticed
 rather than dropped.
@@ -61,10 +66,29 @@ def main():
             e['foundry'] = num(a[9])
         items.append(e)
 
+    facility_enum = enum_values(game, found['EFacilityType'])
+    facilities = []
+    for _, s in statements(pk, 'XGItemTree.BuildFacilities'):
+        if s in ('BalanceFacilities()', 'return', 'return nothing', 'nothing', 'END', ''):
+            continue
+        m = re.fullmatch(r'BuildFacility\((.*)\)', s)
+        if not m:
+            sys.exit(f'BuildFacilities: unrecognised statement {s!r}')
+        a = [x.strip() for x in m.group(1).split(',')] + [''] * 12
+        fid = num(a[0])
+        e = {'id': fid, 'enum': facility_enum[fid], 'size': num(a[8])}
+        if num(a[9]):
+            e['tech'] = {'id': num(a[9]), 'enum': tech_enum[num(a[9])]}
+        if num(a[10]):
+            e['item'] = {'id': num(a[10]), 'enum': item_enum[num(a[10])]}
+        facilities.append(e)
+
     json.dump({
-        'source': 'Long War 1.0 XComStrategyGame.upk (XGItemTree.BuildItems); costs, time and engineers '
-                  'are ItemBalance_Normal in DefaultGameCore.ini; read by scripts/upk_itemtree.py',
+        'source': 'Long War 1.0 XComStrategyGame.upk (XGItemTree.BuildItems, BuildFacilities); costs, time, '
+                  'engineers, upkeep and power are ItemBalance_Normal and FacilityBalance in DefaultGameCore.ini; '
+                  'read by scripts/upk_itemtree.py',
         'items': items,
+        'facilities': facilities,
     }, sys.stdout, indent=1)
     print()
 
