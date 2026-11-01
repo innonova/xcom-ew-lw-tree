@@ -1,0 +1,1880 @@
+{
+ "source": "Long War 1.0 XComStrategyGame.upk (XGItemTree.BuildItems); costs, time and engineers are ItemBalance_Normal in DefaultGameCore.ini; read by scripts/upk_itemtree.py",
+ "items": [
+  {
+   "id": 1,
+   "enum": "eItem_BEGIN_WEAPONS",
+   "category": 1,
+   "tech": {
+    "id": 49,
+    "enum": "eTech_AutopsyZombie"
+   }
+  },
+  {
+   "id": 2,
+   "enum": "eItem_Pistol",
+   "category": 1
+  },
+  {
+   "id": 3,
+   "enum": "eItem_AssaultRifle",
+   "category": 1,
+   "tech": {
+    "id": 28,
+    "enum": "eTech_Alloy_Cannon"
+   }
+  },
+  {
+   "id": 4,
+   "enum": "eItem_Shotgun",
+   "category": 1
+  },
+  {
+   "id": 5,
+   "enum": "eItem_LMG",
+   "category": 1,
+   "tech": {
+    "id": 28,
+    "enum": "eTech_Alloy_Cannon"
+   }
+  },
+  {
+   "id": 6,
+   "enum": "eItem_SniperRifle",
+   "category": 1,
+   "tech": {
+    "id": 31,
+    "enum": "eTech_BlasterLauncher"
+   }
+  },
+  {
+   "id": 7,
+   "enum": "eItem_RocketLauncher",
+   "category": 1,
+   "tech": {
+    "id": 31,
+    "enum": "eTech_BlasterLauncher"
+   }
+  },
+  {
+   "id": 8,
+   "enum": "eItem_LaserPistol",
+   "category": 1,
+   "tech": {
+    "id": 20,
+    "enum": "eTech_LaserWeapons"
+   }
+  },
+  {
+   "id": 9,
+   "enum": "eItem_LaserAssaultRifle",
+   "category": 1,
+   "tech": {
+    "id": 22,
+    "enum": "eTech_HeavyLasers"
+   }
+  },
+  {
+   "id": 10,
+   "enum": "eItem_LaserAssaultGun",
+   "category": 1,
+   "tech": {
+    "id": 21,
+    "enum": "eTech_PrecisionLasers"
+   }
+  },
+  {
+   "id": 11,
+   "enum": "eItem_HeavyLaser",
+   "category": 1,
+   "tech": {
+    "id": 22,
+    "enum": "eTech_HeavyLasers"
+   }
+  },
+  {
+   "id": 12,
+   "enum": "eItem_LaserSniperRifle",
+   "category": 1,
+   "tech": {
+    "id": 49,
+    "enum": "eTech_AutopsyZombie"
+   }
+  },
+  {
+   "id": 13,
+   "enum": "eItem_PlasmaPistol",
+   "category": 1,
+   "tech": {
+    "id": 23,
+    "enum": "eTech_Plasma_Pistol"
+   },
+   "item": {
+    "id": 41,
+    "enum": "eItem_SectoidPlasmaPistol"
+   }
+  },
+  {
+   "id": 14,
+   "enum": "eItem_PlasmaLightRifle",
+   "category": 1,
+   "tech": {
+    "id": 24,
+    "enum": "eTech_Plasma_Light"
+   },
+   "item": {
+    "id": 42,
+    "enum": "eItem_PlasmaLightRifle_ThinMan"
+   }
+  },
+  {
+   "id": 15,
+   "enum": "eItem_PlasmaAssaultRifle",
+   "category": 1,
+   "tech": {
+    "id": 25,
+    "enum": "eTech_Plasma_Rifle"
+   },
+   "item": {
+    "id": 45,
+    "enum": "eItem_PlasmaAssaultRifle_Muton"
+   }
+  },
+  {
+   "id": 16,
+   "enum": "eItem_AlloyCannon",
+   "category": 1,
+   "tech": {
+    "id": 31,
+    "enum": "eTech_BlasterLauncher"
+   }
+  },
+  {
+   "id": 17,
+   "enum": "eItem_HeavyPlasma",
+   "category": 1,
+   "tech": {
+    "id": 25,
+    "enum": "eTech_Plasma_Rifle"
+   },
+   "item": {
+    "id": 45,
+    "enum": "eItem_PlasmaAssaultRifle_Muton"
+   }
+  },
+  {
+   "id": 18,
+   "enum": "eItem_PlasmaSniperRifle",
+   "category": 1,
+   "tech": {
+    "id": 27,
+    "enum": "eTech_Plasma_Sniper"
+   },
+   "item": {
+    "id": 47,
+    "enum": "eItem_HeavyPlasma_Muton"
+   }
+  },
+  {
+   "id": 19,
+   "enum": "eItem_BlasterLauncher",
+   "category": 1,
+   "tech": {
+    "id": 30,
+    "enum": "eTech_Fusion_Launcher"
+   }
+  },
+  {
+   "id": 22,
+   "enum": "eItem_MecKineticArm",
+   "category": 3,
+   "tech": {
+    "id": 45,
+    "enum": "eTech_AutopsyFloater"
+   },
+   "foundry": 36
+  },
+  {
+   "id": 23,
+   "enum": "eItem_MecFlameThrower",
+   "category": 3,
+   "tech": {
+    "id": 60,
+    "enum": "eTech_Placeholder"
+   },
+   "foundry": 36
+  },
+  {
+   "id": 24,
+   "enum": "eItem_MecGrenadeLauncher",
+   "category": 3,
+   "tech": {
+    "id": 28,
+    "enum": "eTech_Alloy_Cannon"
+   },
+   "foundry": 36
+  },
+  {
+   "id": 25,
+   "enum": "eItem_MecRestorativeMist",
+   "category": 3,
+   "tech": {
+    "id": 46,
+    "enum": "eTech_AutopsyThinMan"
+   },
+   "foundry": 36
+  },
+  {
+   "id": 26,
+   "enum": "eItem_MecElectroPulse",
+   "category": 3,
+   "tech": {
+    "id": 34,
+    "enum": "eTech_EMP"
+   },
+   "item": {
+    "id": 73,
+    "enum": "eItem_ArcThrower"
+   },
+   "foundry": 36
+  },
+  {
+   "id": 27,
+   "enum": "eItem_MecProximityMineLauncher",
+   "category": 3,
+   "tech": {
+    "id": 31,
+    "enum": "eTech_BlasterLauncher"
+   },
+   "foundry": 36
+  },
+  {
+   "id": 28,
+   "enum": "eItem_Chaingun",
+   "category": 3
+  },
+  {
+   "id": 29,
+   "enum": "eItem_Railgun",
+   "category": 3,
+   "tech": {
+    "id": 21,
+    "enum": "eTech_PrecisionLasers"
+   },
+   "foundry": 36
+  },
+  {
+   "id": 30,
+   "enum": "eItem_ParticleBeam",
+   "category": 3,
+   "tech": {
+    "id": 26,
+    "enum": "eTech_Plasma_Heavy"
+   },
+   "item": {
+    "id": 47,
+    "enum": "eItem_HeavyPlasma_Muton"
+   },
+   "foundry": 36
+  },
+  {
+   "id": 31,
+   "enum": "eItem_BEGIN_SPECIAL_WEAPONS",
+   "category": 1,
+   "foundry": 1
+  },
+  {
+   "id": 32,
+   "enum": "eItem_SectopodArm",
+   "category": 1
+  },
+  {
+   "id": 34,
+   "enum": "eItem_SectopodHeatRay",
+   "category": 1,
+   "tech": {
+    "id": 9,
+    "enum": "eTech_WeaponFragments"
+   }
+  },
+  {
+   "id": 40,
+   "enum": "eItem_BEGIN_ALIEN_SHARED_WEAPONS",
+   "category": 1,
+   "foundry": 6
+  },
+  {
+   "id": 41,
+   "enum": "eItem_SectoidPlasmaPistol",
+   "category": 5
+  },
+  {
+   "id": 42,
+   "enum": "eItem_PlasmaLightRifle_ThinMan",
+   "category": 5
+  },
+  {
+   "id": 45,
+   "enum": "eItem_PlasmaAssaultRifle_Muton",
+   "category": 5
+  },
+  {
+   "id": 47,
+   "enum": "eItem_HeavyPlasma_Muton",
+   "category": 5
+  },
+  {
+   "id": 48,
+   "enum": "eItem_END_ALIEN_SHARED_WEAPONS",
+   "category": 1,
+   "foundry": 7
+  },
+  {
+   "id": 53,
+   "enum": "eItem_SoldierNoWeapon",
+   "category": 1,
+   "tech": {
+    "id": 28,
+    "enum": "eTech_Alloy_Cannon"
+   }
+  },
+  {
+   "id": 57,
+   "enum": "eItem_END_WEAPONS",
+   "category": 2
+  },
+  {
+   "id": 58,
+   "enum": "eItem_BEGIN_ARMOR",
+   "category": 2,
+   "tech": {
+    "id": 16,
+    "enum": "eTech_Armor_Skeleton"
+   }
+  },
+  {
+   "id": 59,
+   "enum": "eItem_ArmorKevlar",
+   "category": 2
+  },
+  {
+   "id": 60,
+   "enum": "eItem_ArmorCarapace",
+   "category": 2,
+   "tech": {
+    "id": 15,
+    "enum": "eTech_Armor_Carapace"
+   }
+  },
+  {
+   "id": 61,
+   "enum": "eItem_ArmorSkeleton",
+   "category": 2,
+   "tech": {
+    "id": 17,
+    "enum": "eTech_Armor_Titan"
+   }
+  },
+  {
+   "id": 62,
+   "enum": "eItem_ArmorTitan",
+   "category": 2,
+   "tech": {
+    "id": 17,
+    "enum": "eTech_Armor_Titan"
+   }
+  },
+  {
+   "id": 63,
+   "enum": "eItem_ArmorArchangel",
+   "category": 2,
+   "tech": {
+    "id": 19,
+    "enum": "eTech_Armor_ArchAngel"
+   },
+   "item": {
+    "id": 62,
+    "enum": "eItem_ArmorTitan"
+   }
+  },
+  {
+   "id": 64,
+   "enum": "eItem_ArmorGhost",
+   "category": 2,
+   "tech": {
+    "id": 18,
+    "enum": "eTech_Armor_Ghost"
+   }
+  },
+  {
+   "id": 65,
+   "enum": "eItem_ArmorPsi",
+   "category": 2,
+   "tech": {
+    "id": 14,
+    "enum": "eTech_PsiArmor"
+   }
+  },
+  {
+   "id": 67,
+   "enum": "eItem_END_ARMOR",
+   "category": 2,
+   "tech": {
+    "id": 19,
+    "enum": "eTech_Armor_ArchAngel"
+   }
+  },
+  {
+   "id": 68,
+   "enum": "eItem_BEGIN_ITEMS",
+   "category": 2,
+   "tech": {
+    "id": 72,
+    "enum": "eTech_Placeholder_12"
+   },
+   "item": {
+    "id": 134,
+    "enum": "eItem_SectoidCorpse"
+   },
+   "foundry": 41
+  },
+  {
+   "id": 69,
+   "enum": "eItem_Medikit",
+   "category": 1
+  },
+  {
+   "id": 70,
+   "enum": "eItem_CombatStims",
+   "category": 1,
+   "tech": {
+    "id": 51,
+    "enum": "eTech_AutopsyBerserker"
+   },
+   "item": {
+    "id": 141,
+    "enum": "eItem_BerserkerCorpse"
+   }
+  },
+  {
+   "id": 71,
+   "enum": "eItem_MindShield",
+   "category": 1,
+   "tech": {
+    "id": 6,
+    "enum": "eTech_AutopsySectoidCommander"
+   },
+   "foundry": 41
+  },
+  {
+   "id": 72,
+   "enum": "eItem_ChitinPlating",
+   "category": 1,
+   "tech": {
+    "id": 48,
+    "enum": "eTech_AutopsyCryssalid"
+   }
+  },
+  {
+   "id": 73,
+   "enum": "eItem_ArcThrower",
+   "category": 1,
+   "tech": {
+    "id": 2,
+    "enum": "eTech_ArcThrower"
+   }
+  },
+  {
+   "id": 74,
+   "enum": "eItem_TargetingModule",
+   "category": 1,
+   "tech": {
+    "id": 9,
+    "enum": "eTech_WeaponFragments"
+   }
+  },
+  {
+   "id": 75,
+   "enum": "eItem_ReinforcedArmor",
+   "category": 1,
+   "tech": {
+    "id": 10,
+    "enum": "eTech_AlienMaterials"
+   }
+  },
+  {
+   "id": 76,
+   "enum": "eItem_RespiratorImplant",
+   "category": 1,
+   "tech": {
+    "id": 58,
+    "enum": "eTech_AutopsySeeker"
+   }
+  },
+  {
+   "id": 77,
+   "enum": "eItem_BallisticModule",
+   "category": 1
+  },
+  {
+   "id": 78,
+   "enum": "eItem_ReaperRounds",
+   "category": 1,
+   "foundry": 34
+  },
+  {
+   "id": 79,
+   "enum": "eItem_END_ITEMS",
+   "category": 1
+  },
+  {
+   "id": 80,
+   "enum": "eItem_BEGIN_GRENADES",
+   "category": 1
+  },
+  {
+   "id": 81,
+   "enum": "eItem_FragGrenade",
+   "category": 1
+  },
+  {
+   "id": 82,
+   "enum": "eItem_SmokeGrenade",
+   "category": 1
+  },
+  {
+   "id": 83,
+   "enum": "eItem_FlashBang",
+   "category": 1
+  },
+  {
+   "id": 84,
+   "enum": "eItem_AlienGrenade",
+   "category": 1,
+   "foundry": 255
+  },
+  {
+   "id": 85,
+   "enum": "eItem_GhostGrenade",
+   "category": 1,
+   "tech": {
+    "id": 58,
+    "enum": "eTech_AutopsySeeker"
+   },
+   "item": {
+    "id": 188,
+    "enum": "eItem_SeekerCorpse"
+   },
+   "foundry": 41
+  },
+  {
+   "id": 86,
+   "enum": "eItem_GasGrenade",
+   "category": 1,
+   "tech": {
+    "id": 46,
+    "enum": "eTech_AutopsyThinMan"
+   },
+   "item": {
+    "id": 138,
+    "enum": "eItem_ThinManCorpse"
+   },
+   "foundry": 40
+  },
+  {
+   "id": 87,
+   "enum": "eItem_NeedleGrenade",
+   "category": 1
+  },
+  {
+   "id": 88,
+   "enum": "eItem_MimicBeacon",
+   "category": 1,
+   "tech": {
+    "id": 7,
+    "enum": "eTech_Hyperwave"
+   },
+   "item": {
+    "id": 134,
+    "enum": "eItem_SectoidCorpse"
+   },
+   "foundry": 41
+  },
+  {
+   "id": 89,
+   "enum": "eItem_BEGIN_ALIEN_GRENADES",
+   "category": 1
+  },
+  {
+   "id": 90,
+   "enum": "eItem_SectoidGrenade",
+   "category": 3,
+   "tech": {
+    "id": 55,
+    "enum": "eTech_AutopsySectopod"
+   },
+   "item": {
+    "id": 168,
+    "enum": "eItem_UFONavigation"
+   },
+   "foundry": 36
+  },
+  {
+   "id": 94,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_25",
+   "category": 1,
+   "tech": {
+    "id": 58,
+    "enum": "eTech_AutopsySeeker"
+   },
+   "foundry": 40
+  },
+  {
+   "id": 95,
+   "enum": "eItem_END_ALIEN_GRENADES",
+   "category": 1
+  },
+  {
+   "id": 96,
+   "enum": "eItem_PsiGrenade",
+   "category": 1,
+   "item": {
+    "id": 134,
+    "enum": "eItem_SectoidCorpse"
+   },
+   "foundry": 41
+  },
+  {
+   "id": 97,
+   "enum": "eItem_BattleScanner",
+   "category": 1
+  },
+  {
+   "id": 98,
+   "enum": "eItem_END_GRENADES",
+   "category": 1
+  },
+  {
+   "id": 99,
+   "enum": "eItem_BEGIN_VEHICLES",
+   "category": 1,
+   "tech": {
+    "id": 25,
+    "enum": "eTech_Plasma_Rifle"
+   },
+   "item": {
+    "id": 45,
+    "enum": "eItem_PlasmaAssaultRifle_Muton"
+   }
+  },
+  {
+   "id": 100,
+   "enum": "eItem_SHIV",
+   "category": 3
+  },
+  {
+   "id": 101,
+   "enum": "eItem_SHIV_Alloy",
+   "category": 3,
+   "tech": {
+    "id": 72,
+    "enum": "eTech_Placeholder_12"
+   }
+  },
+  {
+   "id": 102,
+   "enum": "eItem_SHIV_Hover",
+   "category": 3,
+   "tech": {
+    "id": 19,
+    "enum": "eTech_Armor_ArchAngel"
+   }
+  },
+  {
+   "id": 103,
+   "enum": "eItem_Interceptor",
+   "category": 3
+  },
+  {
+   "id": 104,
+   "enum": "eItem_Firestorm",
+   "category": 3,
+   "tech": {
+    "id": 5,
+    "enum": "eTech_Firestorm"
+   }
+  },
+  {
+   "id": 105,
+   "enum": "eItem_Skyranger",
+   "category": 3
+  },
+  {
+   "id": 106,
+   "enum": "eItem_Satellite",
+   "category": 3
+  },
+  {
+   "id": 107,
+   "enum": "eItem_END_VEHICLES",
+   "category": 3,
+   "tech": {
+    "id": 10,
+    "enum": "eTech_AlienMaterials"
+   }
+  },
+  {
+   "id": 108,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_30",
+   "category": 3,
+   "tech": {
+    "id": 54,
+    "enum": "eTech_AutopsyDrone"
+   }
+  },
+  {
+   "id": 109,
+   "enum": "eItem_ShivMinigun",
+   "category": 3
+  },
+  {
+   "id": 110,
+   "enum": "eItem_ShivSentry",
+   "category": 3,
+   "tech": {
+    "id": 28,
+    "enum": "eTech_Alloy_Cannon"
+   }
+  },
+  {
+   "id": 111,
+   "enum": "eItem_ShivLaser",
+   "category": 3,
+   "tech": {
+    "id": 22,
+    "enum": "eTech_HeavyLasers"
+   }
+  },
+  {
+   "id": 112,
+   "enum": "eItem_ShivPlasma",
+   "category": 3,
+   "tech": {
+    "id": 29,
+    "enum": "eTech_Plasma_Cannon"
+   },
+   "item": {
+    "id": 47,
+    "enum": "eItem_HeavyPlasma_Muton"
+   }
+  },
+  {
+   "id": 113,
+   "enum": "eItem_SHIVDeck_I",
+   "category": 3
+  },
+  {
+   "id": 114,
+   "enum": "eItem_SHIVDeck_II",
+   "category": 3,
+   "tech": {
+    "id": 72,
+    "enum": "eTech_Placeholder_12"
+   }
+  },
+  {
+   "id": 115,
+   "enum": "eItem_SHIVDeck_III",
+   "category": 3,
+   "tech": {
+    "id": 19,
+    "enum": "eTech_Armor_ArchAngel"
+   }
+  },
+  {
+   "id": 116,
+   "enum": "eItem_BEGIN_SHIP_WEAPONS",
+   "category": 3
+  },
+  {
+   "id": 117,
+   "enum": "eItem_IntWeap_I",
+   "category": 3,
+   "tech": {
+    "id": 10,
+    "enum": "eTech_AlienMaterials"
+   }
+  },
+  {
+   "id": 118,
+   "enum": "eItem_IntWeap_II",
+   "category": 3
+  },
+  {
+   "id": 119,
+   "enum": "eItem_IntWeap_III",
+   "category": 3,
+   "tech": {
+    "id": 21,
+    "enum": "eTech_PrecisionLasers"
+   }
+  },
+  {
+   "id": 120,
+   "enum": "eItem_IntWeap_IV",
+   "category": 3,
+   "tech": {
+    "id": 29,
+    "enum": "eTech_Plasma_Cannon"
+   },
+   "item": {
+    "id": 45,
+    "enum": "eItem_PlasmaAssaultRifle_Muton"
+   }
+  },
+  {
+   "id": 121,
+   "enum": "eItem_IntWeap_V",
+   "category": 3,
+   "tech": {
+    "id": 34,
+    "enum": "eTech_EMP"
+   },
+   "item": {
+    "id": 146,
+    "enum": "eItem_SectopodCorpse"
+   }
+  },
+  {
+   "id": 122,
+   "enum": "eItem_IntWeap_VI",
+   "category": 3,
+   "tech": {
+    "id": 30,
+    "enum": "eTech_Fusion_Launcher"
+   },
+   "item": {
+    "id": 179,
+    "enum": "eItem_UFOFusionLauncher"
+   }
+  },
+  {
+   "id": 123,
+   "enum": "eItem_END_SHIP_WEAPONS",
+   "category": 1
+  },
+  {
+   "id": 124,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_29",
+   "category": 3,
+   "tech": {
+    "id": 11,
+    "enum": "eTech_Exp_Warfare"
+   }
+  },
+  {
+   "id": 125,
+   "enum": "eItem_IntConsumable_Dodge",
+   "category": 3,
+   "tech": {
+    "id": 50,
+    "enum": "eTech_AutopsyCyberdisc"
+   },
+   "foundry": 26
+  },
+  {
+   "id": 126,
+   "enum": "eItem_IntConsumable_Boost",
+   "category": 3,
+   "tech": {
+    "id": 10,
+    "enum": "eTech_AlienMaterials"
+   },
+   "foundry": 26
+  },
+  {
+   "id": 127,
+   "enum": "eItem_IntConsumable_Hit",
+   "category": 3,
+   "tech": {
+    "id": 45,
+    "enum": "eTech_AutopsyFloater"
+   },
+   "foundry": 26
+  },
+  {
+   "id": 128,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_27",
+   "category": 3,
+   "tech": {
+    "id": 55,
+    "enum": "eTech_AutopsySectopod"
+   }
+  },
+  {
+   "id": 129,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_28",
+   "category": 3,
+   "tech": {
+    "id": 19,
+    "enum": "eTech_Armor_ArchAngel"
+   },
+   "foundry": 36
+  },
+  {
+   "id": 130,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_24",
+   "category": 3,
+   "tech": {
+    "id": 50,
+    "enum": "eTech_AutopsyCyberdisc"
+   }
+  },
+  {
+   "id": 131,
+   "enum": "eItem_CivilianCorpse",
+   "category": 3,
+   "tech": {
+    "id": 11,
+    "enum": "eTech_Exp_Warfare"
+   }
+  },
+  {
+   "id": 132,
+   "enum": "eItem_TankCorpse",
+   "category": 3,
+   "foundry": 29
+  },
+  {
+   "id": 133,
+   "enum": "eItem_SoldierCorpse",
+   "category": 3,
+   "tech": {
+    "id": 52,
+    "enum": "eTech_AutopsyHeavyFloater"
+   },
+   "foundry": 36
+  },
+  {
+   "id": 134,
+   "enum": "eItem_SectoidCorpse",
+   "category": 6
+  },
+  {
+   "id": 135,
+   "enum": "eItem_SectoidCommanderCorpse",
+   "category": 6
+  },
+  {
+   "id": 136,
+   "enum": "eItem_FloaterCorpse",
+   "category": 6
+  },
+  {
+   "id": 137,
+   "enum": "eItem_FloaterHeavyCorpse",
+   "category": 6
+  },
+  {
+   "id": 138,
+   "enum": "eItem_ThinManCorpse",
+   "category": 6
+  },
+  {
+   "id": 139,
+   "enum": "eItem_MutonCorpse",
+   "category": 6
+  },
+  {
+   "id": 140,
+   "enum": "eItem_MutonEliteCorpse",
+   "category": 6
+  },
+  {
+   "id": 141,
+   "enum": "eItem_BerserkerCorpse",
+   "category": 6
+  },
+  {
+   "id": 142,
+   "enum": "eItem_CyberdiscCorpse",
+   "category": 6
+  },
+  {
+   "id": 143,
+   "enum": "eItem_EtherealCorpse",
+   "category": 6
+  },
+  {
+   "id": 144,
+   "enum": "eItem_CryssalidCorpse",
+   "category": 6
+  },
+  {
+   "id": 145,
+   "enum": "eItem_ZombieCorpse",
+   "category": 2,
+   "tech": {
+    "id": 73,
+    "enum": "eTech_Placeholder_13"
+   },
+   "item": {
+    "id": 193,
+    "enum": "eItem_MecArmor1"
+   }
+  },
+  {
+   "id": 146,
+   "enum": "eItem_SectopodCorpse",
+   "category": 6
+  },
+  {
+   "id": 147,
+   "enum": "eItem_DroneCorpse",
+   "category": 6
+  },
+  {
+   "id": 148,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_23",
+   "category": 2,
+   "tech": {
+    "id": 75,
+    "enum": "eTech_Placeholder_15"
+   },
+   "item": {
+    "id": 194,
+    "enum": "eItem_MecArmor2"
+   }
+  },
+  {
+   "id": 149,
+   "enum": "eItem_BEGIN_CORPSES",
+   "category": 3,
+   "tech": {
+    "id": 21,
+    "enum": "eTech_PrecisionLasers"
+   }
+  },
+  {
+   "id": 150,
+   "enum": "eItem_SectoidCaptive",
+   "category": 6
+  },
+  {
+   "id": 151,
+   "enum": "eItem_SectoidCommanderCaptive",
+   "category": 6
+  },
+  {
+   "id": 152,
+   "enum": "eItem_FloaterCaptive",
+   "category": 6
+  },
+  {
+   "id": 153,
+   "enum": "eItem_FloaterHeavyCaptive",
+   "category": 6
+  },
+  {
+   "id": 154,
+   "enum": "eItem_ThinManCaptive",
+   "category": 6
+  },
+  {
+   "id": 155,
+   "enum": "eItem_MutonCaptive",
+   "category": 6
+  },
+  {
+   "id": 156,
+   "enum": "eItem_MutonEliteCaptive",
+   "category": 6
+  },
+  {
+   "id": 157,
+   "enum": "eItem_BerserkerCaptive",
+   "category": 6
+  },
+  {
+   "id": 158,
+   "enum": "eItem_EtherealCaptive",
+   "category": 6
+  },
+  {
+   "id": 159,
+   "enum": "eItem_END_CAPTIVES",
+   "category": 2,
+   "tech": {
+    "id": 72,
+    "enum": "eTech_Placeholder_12"
+   }
+  },
+  {
+   "id": 160,
+   "enum": "eItem_BEGIN_COLLECTIBLES",
+   "category": 2,
+   "tech": {
+    "id": 16,
+    "enum": "eTech_Armor_Skeleton"
+   }
+  },
+  {
+   "id": 161,
+   "enum": "eItem_Elerium115",
+   "category": 5
+  },
+  {
+   "id": 162,
+   "enum": "eItem_AlienAlloys",
+   "category": 5
+  },
+  {
+   "id": 163,
+   "enum": "eItem_WeaponFragment",
+   "category": 5
+  },
+  {
+   "id": 164,
+   "enum": "eItem_Meld",
+   "category": 5
+  },
+  {
+   "id": 165,
+   "enum": "eItem_AlienEntertainment",
+   "category": 5
+  },
+  {
+   "id": 166,
+   "enum": "eItem_AlienFood",
+   "category": 5
+  },
+  {
+   "id": 167,
+   "enum": "eItem_AlienStasisTank",
+   "category": 5
+  },
+  {
+   "id": 168,
+   "enum": "eItem_UFONavigation",
+   "category": 5
+  },
+  {
+   "id": 169,
+   "enum": "eItem_AlienSurgery",
+   "category": 5
+  },
+  {
+   "id": 170,
+   "enum": "eItem_UFOPowerSource",
+   "category": 5
+  },
+  {
+   "id": 171,
+   "enum": "eItem_HyperwaveBeacon",
+   "category": 5
+  },
+  {
+   "id": 172,
+   "enum": "eItem_DamagedAlienEntertainment",
+   "category": 5
+  },
+  {
+   "id": 173,
+   "enum": "eItem_DamagedAlienFood",
+   "category": 5
+  },
+  {
+   "id": 174,
+   "enum": "eItem_DamagedAlienStasisTank",
+   "category": 5
+  },
+  {
+   "id": 175,
+   "enum": "eItem_DamagedUFONavigation",
+   "category": 5
+  },
+  {
+   "id": 176,
+   "enum": "eItem_DamagedAlienSurgery",
+   "category": 5
+  },
+  {
+   "id": 177,
+   "enum": "eItem_DamagedUFOPowerSource",
+   "category": 5
+  },
+  {
+   "id": 178,
+   "enum": "eItem_DamagedHyperwaveBeacon",
+   "category": 1,
+   "tech": {
+    "id": 19,
+    "enum": "eTech_Armor_ArchAngel"
+   }
+  },
+  {
+   "id": 179,
+   "enum": "eItem_UFOFusionLauncher",
+   "category": 5
+  },
+  {
+   "id": 180,
+   "enum": "eItem_PsiLink",
+   "category": 5
+  },
+  {
+   "id": 181,
+   "enum": "eItem_ExaltIntel",
+   "category": 5
+  },
+  {
+   "id": 182,
+   "enum": "eItem_END_COLLECTIBLES",
+   "category": 2,
+   "tech": {
+    "id": 15,
+    "enum": "eTech_Armor_Carapace"
+   }
+  },
+  {
+   "id": 183,
+   "enum": "eItem_Base_Shard",
+   "category": 5
+  },
+  {
+   "id": 184,
+   "enum": "eItem_Skeleton_Key",
+   "category": 1,
+   "tech": {
+    "id": 3,
+    "enum": "eTech_BaseShard"
+   }
+  },
+  {
+   "id": 186,
+   "enum": "eItem_XPACK_BEGIN_CORPSES",
+   "category": 3,
+   "tech": {
+    "id": 31,
+    "enum": "eTech_BlasterLauncher"
+   },
+   "foundry": 36
+  },
+  {
+   "id": 187,
+   "enum": "eItem_MechtoidCore",
+   "category": 6
+  },
+  {
+   "id": 188,
+   "enum": "eItem_SeekerCorpse",
+   "category": 6
+  },
+  {
+   "id": 189,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_22",
+   "category": 3,
+   "foundry": 29
+  },
+  {
+   "id": 190,
+   "enum": "eItem_XPACK_END_CORPSES",
+   "category": 3,
+   "tech": {
+    "id": 49,
+    "enum": "eTech_AutopsyZombie"
+   },
+   "foundry": 36
+  },
+  {
+   "id": 191,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_21",
+   "category": 2,
+   "tech": {
+    "id": 74,
+    "enum": "eTech_Placeholder_14"
+   },
+   "item": {
+    "id": 145,
+    "enum": "eItem_ZombieCorpse"
+   }
+  },
+  {
+   "id": 192,
+   "enum": "eItem_MecCivvies",
+   "category": 2,
+   "tech": {
+    "id": 60,
+    "enum": "eTech_Placeholder"
+   }
+  },
+  {
+   "id": 193,
+   "enum": "eItem_MecArmor1",
+   "category": 2,
+   "tech": {
+    "id": 60,
+    "enum": "eTech_Placeholder"
+   }
+  },
+  {
+   "id": 194,
+   "enum": "eItem_MecArmor2",
+   "category": 2,
+   "tech": {
+    "id": 73,
+    "enum": "eTech_Placeholder_13"
+   },
+   "item": {
+    "id": 193,
+    "enum": "eItem_MecArmor1"
+   }
+  },
+  {
+   "id": 195,
+   "enum": "eItem_MecArmor3",
+   "category": 2,
+   "tech": {
+    "id": 75,
+    "enum": "eTech_Placeholder_15"
+   },
+   "item": {
+    "id": 194,
+    "enum": "eItem_MecArmor2"
+   }
+  },
+  {
+   "id": 196,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_0",
+   "category": 1,
+   "tech": {
+    "id": 11,
+    "enum": "eTech_Exp_Warfare"
+   },
+   "foundry": 40
+  },
+  {
+   "id": 197,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_1",
+   "category": 1,
+   "tech": {
+    "id": 11,
+    "enum": "eTech_Exp_Warfare"
+   },
+   "foundry": 40
+  },
+  {
+   "id": 198,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_2",
+   "category": 1,
+   "tech": {
+    "id": 72,
+    "enum": "eTech_Placeholder_12"
+   },
+   "foundry": 40
+  },
+  {
+   "id": 199,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_3",
+   "category": 3,
+   "foundry": 16
+  },
+  {
+   "id": 200,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_4",
+   "category": 1,
+   "tech": {
+    "id": 16,
+    "enum": "eTech_Armor_Skeleton"
+   },
+   "foundry": 40
+  },
+  {
+   "id": 201,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_5",
+   "category": 3,
+   "tech": {
+    "id": 57,
+    "enum": "eTech_AutopsyMechtoid"
+   },
+   "item": {
+    "id": 168,
+    "enum": "eItem_UFONavigation"
+   },
+   "foundry": 36
+  },
+  {
+   "id": 202,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_6",
+   "category": 1,
+   "tech": {
+    "id": 17,
+    "enum": "eTech_Armor_Titan"
+   },
+   "foundry": 21
+  },
+  {
+   "id": 203,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_7",
+   "category": 1,
+   "tech": {
+    "id": 60,
+    "enum": "eTech_Placeholder"
+   },
+   "item": {
+    "id": 74,
+    "enum": "eItem_TargetingModule"
+   },
+   "foundry": 41
+  },
+  {
+   "id": 204,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_8",
+   "category": 1,
+   "tech": {
+    "id": 11,
+    "enum": "eTech_Exp_Warfare"
+   },
+   "foundry": 40
+  },
+  {
+   "id": 205,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_9",
+   "category": 1,
+   "tech": {
+    "id": 57,
+    "enum": "eTech_AutopsyMechtoid"
+   },
+   "item": {
+    "id": 187,
+    "enum": "eItem_MechtoidCore"
+   },
+   "foundry": 41
+  },
+  {
+   "id": 206,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_10",
+   "category": 3,
+   "item": {
+    "id": 113,
+    "enum": "eItem_SHIVDeck_I"
+   }
+  },
+  {
+   "id": 207,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_11",
+   "category": 3,
+   "tech": {
+    "id": 72,
+    "enum": "eTech_Placeholder_12"
+   },
+   "item": {
+    "id": 114,
+    "enum": "eItem_SHIVDeck_II"
+   }
+  },
+  {
+   "id": 208,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_12",
+   "category": 3,
+   "tech": {
+    "id": 19,
+    "enum": "eTech_Armor_ArchAngel"
+   },
+   "item": {
+    "id": 115,
+    "enum": "eItem_SHIVDeck_III"
+   }
+  },
+  {
+   "id": 209,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_13",
+   "category": 1
+  },
+  {
+   "id": 210,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_20",
+   "category": 2,
+   "tech": {
+    "id": 74,
+    "enum": "eTech_Placeholder_14"
+   },
+   "item": {
+    "id": 145,
+    "enum": "eItem_ZombieCorpse"
+   }
+  },
+  {
+   "id": 211,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_18",
+   "category": 3,
+   "tech": {
+    "id": 60,
+    "enum": "eTech_Placeholder"
+   },
+   "foundry": 19
+  },
+  {
+   "id": 212,
+   "enum": "eItem_ExaltAssaultRifle",
+   "category": 1
+  },
+  {
+   "id": 213,
+   "enum": "eItem_ExaltSniperRifle",
+   "category": 1
+  },
+  {
+   "id": 214,
+   "enum": "eItem_ExaltLMG",
+   "category": 1
+  },
+  {
+   "id": 215,
+   "enum": "eItem_ExaltLaserAssaultRifle",
+   "category": 1,
+   "tech": {
+    "id": 20,
+    "enum": "eTech_LaserWeapons"
+   }
+  },
+  {
+   "id": 216,
+   "enum": "eItem_ExaltLaserSniperRifle",
+   "category": 1,
+   "tech": {
+    "id": 21,
+    "enum": "eTech_PrecisionLasers"
+   }
+  },
+  {
+   "id": 217,
+   "enum": "eItem_ExaltHeavyLaser",
+   "category": 1,
+   "tech": {
+    "id": 20,
+    "enum": "eTech_LaserWeapons"
+   }
+  },
+  {
+   "id": 218,
+   "enum": "eItem_ExaltRocketLauncher",
+   "category": 1
+  },
+  {
+   "id": 219,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_19",
+   "category": 1,
+   "tech": {
+    "id": 1,
+    "enum": "eTech_Xenobiology"
+   }
+  },
+  {
+   "id": 220,
+   "enum": "eItem_NullPrereq",
+   "category": 1,
+   "tech": {
+    "id": 72,
+    "enum": "eTech_Placeholder_12"
+   }
+  },
+  {
+   "id": 221,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_14",
+   "category": 3,
+   "tech": {
+    "id": 12,
+    "enum": "eTech_Elerium"
+   },
+   "foundry": 21
+  },
+  {
+   "id": 222,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_15",
+   "category": 1
+  },
+  {
+   "id": 223,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_16",
+   "category": 1
+  },
+  {
+   "id": 224,
+   "enum": "eItem_END_EXALT_COLLECTIBLES_17",
+   "category": 1
+  },
+  {
+   "id": 225,
+   "enum": "eItem_END_EXALT_COLLECTIBLES",
+   "category": 1,
+   "tech": {
+    "id": 45,
+    "enum": "eTech_AutopsyFloater"
+   },
+   "foundry": 36
+  },
+  {
+   "id": 226,
+   "enum": "eItem_MecArmor1_Kinetic",
+   "category": 1
+  },
+  {
+   "id": 227,
+   "enum": "eItem_MecArmor1_Flamethrower",
+   "category": 1,
+   "tech": {
+    "id": 21,
+    "enum": "eTech_PrecisionLasers"
+   }
+  },
+  {
+   "id": 228,
+   "enum": "eItem_MecArmor2_Kinetic_Grenade",
+   "category": 1,
+   "tech": {
+    "id": 31,
+    "enum": "eTech_BlasterLauncher"
+   }
+  },
+  {
+   "id": 229,
+   "enum": "eItem_MecArmor2_Kinetic_Mist",
+   "category": 1,
+   "tech": {
+    "id": 49,
+    "enum": "eTech_AutopsyZombie"
+   }
+  },
+  {
+   "id": 230,
+   "enum": "eItem_MecArmor2_Flamethrower_Grenade",
+   "category": 1,
+   "tech": {
+    "id": 27,
+    "enum": "eTech_Plasma_Sniper"
+   },
+   "item": {
+    "id": 45,
+    "enum": "eItem_PlasmaAssaultRifle_Muton"
+   }
+  },
+  {
+   "id": 231,
+   "enum": "eItem_MecArmor2_Flamethrower_Mist",
+   "category": 1
+  },
+  {
+   "id": 232,
+   "enum": "eItem_MecArmor3_Kinetic_Grenade_Electro",
+   "category": 1,
+   "tech": {
+    "id": 20,
+    "enum": "eTech_LaserWeapons"
+   }
+  },
+  {
+   "id": 233,
+   "enum": "eItem_MecArmor3_Kinetic_Grenade_ProximityMine",
+   "category": 1,
+   "tech": {
+    "id": 28,
+    "enum": "eTech_Alloy_Cannon"
+   }
+  },
+  {
+   "id": 234,
+   "enum": "eItem_MecArmor3_Kinetic_Mist_Electro",
+   "category": 1,
+   "tech": {
+    "id": 22,
+    "enum": "eTech_HeavyLasers"
+   }
+  },
+  {
+   "id": 235,
+   "enum": "eItem_MecArmor3_Kinetic_Mist_ProximityMine",
+   "category": 1,
+   "tech": {
+    "id": 24,
+    "enum": "eTech_Plasma_Light"
+   },
+   "item": {
+    "id": 42,
+    "enum": "eItem_PlasmaLightRifle_ThinMan"
+   }
+  },
+  {
+   "id": 236,
+   "enum": "eItem_MecArmor3_Flamethrower_Grenade_Electro",
+   "category": 1
+  },
+  {
+   "id": 237,
+   "enum": "eItem_MecArmor3_Flamethrower_Grenade_ProximityMine",
+   "category": 1,
+   "tech": {
+    "id": 20,
+    "enum": "eTech_LaserWeapons"
+   }
+  },
+  {
+   "id": 238,
+   "enum": "eItem_MecArmor3_Flamethrower_Mist_Electro",
+   "category": 1,
+   "tech": {
+    "id": 28,
+    "enum": "eTech_Alloy_Cannon"
+   }
+  },
+  {
+   "id": 239,
+   "enum": "eItem_MecArmor3_Flamethrower_Mist_ProximityMine",
+   "category": 1,
+   "tech": {
+    "id": 22,
+    "enum": "eTech_HeavyLasers"
+   }
+  },
+  {
+   "id": 240,
+   "enum": "eItem_BEGIN_EXALT_COLLECTIBLES",
+   "category": 1,
+   "tech": {
+    "id": 23,
+    "enum": "eTech_Plasma_Pistol"
+   },
+   "item": {
+    "id": 41,
+    "enum": "eItem_SectoidPlasmaPistol"
+   }
+  },
+  {
+   "id": 241,
+   "enum": "eItem_EXALTLoot1",
+   "category": 1
+  },
+  {
+   "id": 242,
+   "enum": "eItem_EXALTLoot2",
+   "category": 1,
+   "tech": {
+    "id": 21,
+    "enum": "eTech_PrecisionLasers"
+   }
+  },
+  {
+   "id": 243,
+   "enum": "eItem_EXALTLoot3",
+   "category": 1,
+   "tech": {
+    "id": 31,
+    "enum": "eTech_BlasterLauncher"
+   }
+  },
+  {
+   "id": 244,
+   "enum": "eItem_BEGIN_EXALT_WEAPONS",
+   "category": 1,
+   "tech": {
+    "id": 49,
+    "enum": "eTech_AutopsyZombie"
+   }
+  },
+  {
+   "id": 245,
+   "enum": "eItem_END_EXALT_WEAPONS",
+   "category": 1,
+   "tech": {
+    "id": 26,
+    "enum": "eTech_Plasma_Heavy"
+   },
+   "item": {
+    "id": 47,
+    "enum": "eItem_HeavyPlasma_Muton"
+   }
+  },
+  {
+   "id": 246,
+   "enum": "eItem_BEGIN_MEC_ARMOR",
+   "category": 1
+  },
+  {
+   "id": 247,
+   "enum": "eItem_END_MEC_ARMOR",
+   "category": 1,
+   "tech": {
+    "id": 20,
+    "enum": "eTech_LaserWeapons"
+   }
+  },
+  {
+   "id": 248,
+   "enum": "eItem_CorpsePlaceholder2",
+   "category": 1,
+   "tech": {
+    "id": 28,
+    "enum": "eTech_Alloy_Cannon"
+   }
+  },
+  {
+   "id": 249,
+   "enum": "eItem_END_CORPSES",
+   "category": 1,
+   "tech": {
+    "id": 22,
+    "enum": "eTech_HeavyLasers"
+   }
+  },
+  {
+   "id": 250,
+   "enum": "eItem_BEGIN_CAPTIVES",
+   "category": 1,
+   "tech": {
+    "id": 26,
+    "enum": "eTech_Plasma_Heavy"
+   },
+   "item": {
+    "id": 47,
+    "enum": "eItem_HeavyPlasma_Muton"
+   }
+  },
+  {
+   "id": 251,
+   "enum": "eItem_BEGIN_INTERCEPTOR_CONSUMABLES",
+   "category": 1,
+   "tech": {
+    "id": 20,
+    "enum": "eTech_LaserWeapons"
+   }
+  },
+  {
+   "id": 252,
+   "enum": "eItem_BEGIN_VEHICLE_UPGRADES",
+   "category": 1,
+   "tech": {
+    "id": 22,
+    "enum": "eTech_HeavyLasers"
+   }
+  },
+  {
+   "id": 253,
+   "enum": "eItem_END_INTERCEPTOR_CONSUMABLES",
+   "category": 1,
+   "tech": {
+    "id": 2,
+    "enum": "eTech_ArcThrower"
+   },
+   "foundry": 40
+  },
+  {
+   "id": 254,
+   "enum": "eItem_END_VEHICLE_UPGRADES",
+   "category": 1,
+   "item": {
+    "id": 4,
+    "enum": "eItem_Shotgun"
+   }
+  }
+ ]
+}
