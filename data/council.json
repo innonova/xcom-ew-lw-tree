@@ -1,0 +1,507 @@
+{
+ "source": "Long War 1.0's XGFundingCouncil.BuildMission (XComStrategyGame.upk) and its DefaultGameData.ini; read by scripts/upk_council.py",
+ "constants": {
+  "MIN_MONEY_REWARD": 100.0,
+  "MAX_MONEY_REWARD": 225.0,
+  "MAX_MONEY_REWARD_HARD": 150.0,
+  "MAX_MONEY_REWARD_CLASSIC": 125.0,
+  "MIN_MONEY_REWARD_EASY": 100.0,
+  "FCM_MONEY_SCALAR": 2.25,
+  "MISSION_FAIL_LOW_PANIC": 20.0,
+  "MISSION_FAIL_HIGH_PANIC": 40.0,
+  "MISSION_REWARD_LOW_DAYS": 21.0,
+  "MISSION_REWARD_LOW_MULT": 0.5,
+  "MISSION_REWARD_MED_DAYS": 41.0,
+  "MISSION_REWARD_MED_MULT": 0.75,
+  "MISSION_REWARD_SOLDIER_LOW_LEVEL": 1.0,
+  "MISSION_REWARD_SOLDIER_MED_LEVEL": 2.0,
+  "MISSION_REWARD_SOLDIER_HIGH_LEVEL": 3.0,
+  "REQUEST_MISSION_CHANCE": 50.0
+ },
+ "missions": [
+  {
+   "id": 1,
+   "enum": "eFCM_HeliAssault",
+   "rewards": [
+    {
+     "type": 1,
+     "amount": {
+      "money": 1
+     }
+    },
+    {
+     "type": 6,
+     "amount": -30
+    }
+   ],
+   "kind": 1,
+   "panicOnFailure": 20,
+   "map": "URB_StreetOverpass_Assault",
+   "variant": "Mission Variant Assault on Overpass",
+   "firstAct": 2
+  },
+  {
+   "id": 2,
+   "enum": "eFCM_PierAssault",
+   "rewards": [
+    {
+     "type": 1,
+     "amount": {
+      "money": 1
+     }
+    },
+    {
+     "type": 8,
+     "amount": 30
+    }
+   ],
+   "kind": 1,
+   "map": "URB_PierA_Assault",
+   "variant": "Mission Variant Assault on Pier",
+   "firstAct": 1
+  },
+  {
+   "id": 3,
+   "enum": "eFCM_TruckStopAssault",
+   "rewards": [
+    {
+     "type": 1,
+     "amount": {
+      "money": 1
+     }
+    },
+    {
+     "type": 8,
+     "amount": 30
+    }
+   ],
+   "kind": 1,
+   "map": "URB_Truckstop_Assault",
+   "variant": "Mission Variant Urban Assault on Truckstop",
+   "firstAct": 1
+  },
+  {
+   "id": 4,
+   "enum": "eFCM_IndustrialAssault",
+   "rewards": [
+    {
+     "type": 6,
+     "amount": -30
+    },
+    {
+     "type": 1,
+     "amount": {
+      "money": 2
+     }
+    },
+    {
+     "type": 3,
+     "amount": {
+      "soldier": [
+       -1,
+       -1
+      ]
+     }
+    }
+   ],
+   "kind": 1,
+   "map": "URB_IndustrialOffice_Assault",
+   "variant": "Mission Variant Assault on Corporate Offices",
+   "firstAct": 1
+  },
+  {
+   "id": 5,
+   "enum": "eFCM_CemeteryAssault",
+   "rewards": [
+    {
+     "type": 6,
+     "amount": -60
+    },
+    {
+     "type": 1,
+     "amount": {
+      "money": 1
+     }
+    }
+   ],
+   "kind": 1,
+   "panicOnFailure": 20,
+   "map": "URB_CemeteryGrand_Assault",
+   "variant": "Mission Variant Cemetery Grand Assault",
+   "firstAct": 1
+  },
+  {
+   "id": 6,
+   "enum": "eFCM_ResearchAssault",
+   "rewards": [
+    {
+     "type": 1,
+     "amount": {
+      "money": 1
+     }
+    },
+    {
+     "type": 4,
+     "amount": 8
+    }
+   ],
+   "kind": 1,
+   "panicOnFailure": 20,
+   "map": "URB_ResearchOutpost_Assault",
+   "variant": "Mission Variant Assault on Outpost",
+   "firstAct": 1
+  },
+  {
+   "id": 17,
+   "enum": "eFCM_CemeteryBomb",
+   "rewards": [
+    {
+     "type": 1,
+     "amount": {
+      "money": 2.25
+     }
+    },
+    {
+     "type": 5,
+     "amount": 6
+    },
+    {
+     "type": 6,
+     "amount": -40
+    }
+   ],
+   "kind": 2,
+   "panicOnFailure": 40,
+   "map": "URB_CemeteryGrand_Bomb",
+   "variant": "Mission Variant Bomb Defusal Grand Cemetery",
+   "firstAct": 1
+  },
+  {
+   "id": 7,
+   "enum": "eFCM_TrainStationBomb",
+   "rewards": [
+    {
+     "type": 1,
+     "amount": {
+      "money": 2.25
+     }
+    },
+    {
+     "type": 6,
+     "amount": -40
+    }
+   ],
+   "kind": 2,
+   "panicOnFailure": 40,
+   "map": "URB_TrainStation_Bomb",
+   "variant": "Mission Variant Bomb Defusal Train Station",
+   "firstAct": 1
+  },
+  {
+   "id": 8,
+   "enum": "eFCM_SlaughterBomb",
+   "rewards": [
+    {
+     "type": 1,
+     "amount": {
+      "money": 2.25
+     }
+    },
+    {
+     "type": 6,
+     "amount": -40
+    }
+   ],
+   "kind": 2,
+   "panicOnFailure": 40,
+   "map": "URB_SlaughterhouseA_Bomb",
+   "variant": "Mission Variant Bomb Defusal Urban Slaughterhouse",
+   "firstAct": 1
+  },
+  {
+   "id": 9,
+   "enum": "eFCM_TrainyardBomb",
+   "rewards": [
+    {
+     "type": 1,
+     "amount": {
+      "money": 2.25
+     }
+    },
+    {
+     "type": 6,
+     "amount": -30
+    }
+   ],
+   "kind": 2,
+   "panicOnFailure": 40,
+   "map": "URB_Trainyard_Bomb",
+   "variant": "Mission Variant Bomb Defusal Urban Trainyard",
+   "firstAct": 1
+  },
+  {
+   "id": 10,
+   "enum": "eFCM_BridgeBomb",
+   "rewards": [
+    {
+     "type": 1,
+     "amount": {
+      "money": 2.25
+     }
+    },
+    {
+     "type": 6,
+     "amount": -40
+    }
+   ],
+   "kind": 2,
+   "panicOnFailure": 40,
+   "map": "URB_HighwayBridge_Bomb",
+   "variant": "Mission Variant Bomb Defusal Urban Highway Bridge",
+   "firstAct": 1
+  },
+  {
+   "id": 11,
+   "enum": "eFCM_CommercialExtraction",
+   "rewards": [
+    {
+     "type": 3,
+     "amount": {
+      "soldier": [
+       -1,
+       4
+      ]
+     }
+    },
+    {
+     "type": 6,
+     "amount": -20
+    }
+   ],
+   "kind": 4,
+   "map": "URB_CommercialAlley_Rescue",
+   "variant": "Mission Variant Commercial Alley Rescue",
+   "firstAct": 1
+  },
+  {
+   "id": 12,
+   "enum": "eFCM_PierExtraction",
+   "rewards": [
+    {
+     "type": 1,
+     "amount": {
+      "money": 2.25
+     }
+    },
+    {
+     "type": 5,
+     "amount": 8
+    }
+   ],
+   "kind": 4,
+   "map": "URB_PierA_Rescue",
+   "variant": "Mission Variant Pier Rescue",
+   "firstAct": 1
+  },
+  {
+   "id": 16,
+   "enum": "eFCM_ResearchRescue",
+   "rewards": [
+    {
+     "type": 1,
+     "amount": {
+      "money": 2.25
+     }
+    },
+    {
+     "type": 6,
+     "amount": -30
+    },
+    {
+     "type": 4,
+     "amount": 8
+    }
+   ],
+   "kind": 4,
+   "panicOnFailure": 20,
+   "map": "URB_ResearchOutpost_Rescue",
+   "variant": "Mission Variant Research Outpost Rescue",
+   "firstAct": 1
+  },
+  {
+   "id": 13,
+   "enum": "eFCM_MuseumRescue",
+   "rewards": [
+    {
+     "type": 1,
+     "amount": {
+      "money": 2.25
+     }
+    },
+    {
+     "type": 6,
+     "amount": -30
+    },
+    {
+     "type": 5,
+     "amount": 8
+    }
+   ],
+   "kind": 4,
+   "panicOnFailure": 40,
+   "map": "URB_StreetHurricane_Extraction",
+   "variant": "Mission Variant Urban Street Hurricane Extraction",
+   "firstAct": 1
+  },
+  {
+   "id": 14,
+   "enum": "eFCM_HighwayRescue",
+   "rewards": [
+    {
+     "type": 1,
+     "amount": {
+      "money": 2.25
+     }
+    },
+    {
+     "type": 6,
+     "amount": -10
+    },
+    {
+     "type": 5,
+     "amount": 4
+    },
+    {
+     "type": 3,
+     "amount": "named"
+    }
+   ],
+   "kind": 3,
+   "panicOnFailure": 20,
+   "map": "URB_HighwayFallen_Extraction",
+   "variant": "Mission Variant Urban Highway Fallen Extraction",
+   "firstAct": 1
+  },
+  {
+   "id": 15,
+   "enum": "eFCM_BoulevardRescue",
+   "rewards": [
+    {
+     "type": 1,
+     "amount": {
+      "money": 2.25
+     }
+    },
+    {
+     "type": 6,
+     "amount": -40
+    },
+    {
+     "type": 4,
+     "amount": 8
+    }
+   ],
+   "kind": 4,
+   "map": "URB_Boulevard_Extraction",
+   "variant": "Mission Variant Urban Boulevard Extraction",
+   "firstAct": 1
+  },
+  {
+   "id": 29,
+   "enum": "eFCM_ChryssalidHive",
+   "rewards": [
+    {
+     "type": 6,
+     "amount": -20
+    },
+    {
+     "type": 1,
+     "amount": 450
+    }
+   ],
+   "kind": 1,
+   "panicOnFailure": 40,
+   "map": "EWI_ChryssalidHive",
+   "variant": "Liam - Please Play W/ Chyrssalids!",
+   "country": 15
+  },
+  {
+   "id": 30,
+   "enum": "eFCM_MeldTutorial",
+   "rewards": [],
+   "kind": 5,
+   "map": "EWI_MeldTutorial"
+  },
+  {
+   "id": 25,
+   "enum": "eFCM_Progeny_Portent",
+   "rewards": [
+    {
+     "type": 4,
+     "amount": 4
+    },
+    {
+     "type": 5,
+     "amount": 4
+    },
+    {
+     "type": 1,
+     "amount": 150
+    }
+   ],
+   "country": 5,
+   "kind": 5,
+   "map": "DLC2_1_Portent"
+  },
+  {
+   "id": 26,
+   "enum": "eFCM_Progeny_Deluge",
+   "rewards": [
+    {
+     "type": 3,
+     "amount": "named"
+    },
+    {
+     "type": 1,
+     "amount": 330
+    }
+   ],
+   "country": 5,
+   "kind": 5,
+   "map": "DLC2_2_Deluge"
+  },
+  {
+   "id": 27,
+   "enum": "eFCM_Progeny_Furies",
+   "rewards": [
+    {
+     "type": 3,
+     "amount": "named"
+    },
+    {
+     "type": 3,
+     "amount": "named"
+    },
+    {
+     "type": 3,
+     "amount": "named"
+    },
+    {
+     "type": 1,
+     "amount": 250
+    },
+    {
+     "type": 10,
+     "amount": 1
+    },
+    {
+     "type": 3,
+     "amount": "named"
+    }
+   ],
+   "country": 5,
+   "kind": 5,
+   "map": "DLC2_3_Furies"
+  }
+ ]
+}
