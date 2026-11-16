@@ -26,7 +26,7 @@ NATIVE = {
     0xa9: '-pre', 0xaa: '**', 0xab: '*', 0xac: '/', 0xad: '%', 0xae: '+', 0xaf: '-',
     0xb0: '<', 0xb1: '>', 0xb2: '<=', 0xb3: '>=', 0xb4: '==', 0xb5: '!=',
     0xb6: '*=', 0xb7: '/=', 0xb8: '+=', 0xb9: '-=', 0xba: 'abs',
-    0xf2: '==', 0xf3: '!=', 0xf4: 'fmin', 0xf5: 'fmax', 0xf6: 'fclamp', 0xf9: 'min', 0xfa: 'max', 0xfb: 'clamp',
+    0xf2: '==', 0xf3: '!=', 0xf4: 'fmin', 0xf5: 'fmax', 0xf6: 'fclamp', 0xf9: 'min', 0xfa: 'max', 0xfb: 'clamp', 0xfd: '%',
 }
 
 
@@ -114,6 +114,7 @@ class Script:
             # array, item, has-index byte, the index (an empty marker when unused), end offset
             a = s.expr(); v = s.expr(); has = s.u8(); i = s.expr(); s.u16()
             return f'foreach {a}({v}{", " + i if has else ""})'
+        if t == 0x2f: e = s.expr(); end = s.u16(); return f'foreach {e} (ends {end})'
         if t == 0x30: return 'iterator pop'
         if t == 0x31: return 'iterator next'
         if 0x60 <= t <= 0x6f:
