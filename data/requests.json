@@ -1,0 +1,1015 @@
+{
+ "source": "Long War 1.0's XGFundingCouncil.BuildRequest (XComStrategyGame.upk) and its DefaultGameData.ini; read by scripts/upk_requests.py",
+ "constants": {
+  "FCREQUEST_DAYS": 20.0,
+  "PROFIT_MARGIN": 1.25,
+  "BASE_REQUEST_COOLDOWN_DAYS": 5.0,
+  "FC_REQUEST_EXTENDED_COOLDOWN_DAYS": 5.0,
+  "REQUEST_MISSION_CHANCE": 50.0
+ },
+ "requests": [
+  {
+   "id": 1,
+   "item": 136,
+   "requires": [
+    45
+   ],
+   "amount": "corpses",
+   "hoursFactor": 12,
+   "rewards": [
+    [
+     {
+      "type": 3,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 4,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 5,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 26,
+   "item": 141,
+   "requires": [
+    51
+   ],
+   "amount": 10,
+   "hoursFactor": 12,
+   "rewards": [
+    [
+     {
+      "type": 1,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 4,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 3,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 27,
+   "item": 140,
+   "requires": [
+    53
+   ],
+   "amount": 10,
+   "hoursFactor": 12,
+   "rewards": [
+    [
+     {
+      "type": 4,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 5,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 3,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 2,
+   "item": 162,
+   "requires": [
+    10
+   ],
+   "amount": "fragments",
+   "hoursFactor": 12,
+   "rewards": [
+    [
+     {
+      "type": 1,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 5,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 4,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 3,
+   "item": 161,
+   "requires": [
+    10
+   ],
+   "amount": "fragments",
+   "hoursFactor": 12,
+   "rewards": [
+    [
+     {
+      "type": 1,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 4,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 5,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 7,
+   "item": 142,
+   "requires": [
+    50
+   ],
+   "amount": 3,
+   "hoursFactor": 12,
+   "rewards": [
+    [
+     {
+      "type": 3,
+      "min": 2,
+      "max": 2
+     },
+     {
+      "type": 1,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 5,
+      "min": 2,
+      "max": 2
+     },
+     {
+      "type": 1,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 8,
+   "item": 137,
+   "requires": [
+    52
+   ],
+   "amount": 10,
+   "hoursFactor": 12,
+   "rewards": [
+    [
+     {
+      "type": 3,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 5,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 4,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 4,
+   "display": 163,
+   "amount": "fragments",
+   "item": 163,
+   "requires": [
+    9
+   ],
+   "hoursFactor": 12,
+   "rewards": [
+    [
+     {
+      "type": 5,
+      "min": 1,
+      "max": 1
+     }
+    ]
+   ]
+  },
+  {
+   "id": 5,
+   "item": 168,
+   "requires": [
+    32
+   ],
+   "amount": 3,
+   "hoursFactor": 12,
+   "rewards": [
+    [
+     {
+      "type": 3,
+      "min": 2,
+      "max": 2
+     },
+     {
+      "type": 5,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 4,
+      "min": 2,
+      "max": 2
+     },
+     {
+      "type": 5,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 5,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 6,
+   "item": 147,
+   "requires": [
+    54
+   ],
+   "amount": "corpses",
+   "hoursFactor": 12,
+   "rewards": [
+    [
+     {
+      "type": 5,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 11,
+   "item": 135,
+   "requires": [
+    6
+   ],
+   "amount": 5,
+   "hoursFactor": 12,
+   "rewards": [
+    [
+     {
+      "type": 3,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 5,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 4,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 9,
+   "item": 170,
+   "requires": [
+    33
+   ],
+   "amount": 2,
+   "hoursFactor": 24,
+   "rewards": [
+    [
+     {
+      "type": 3,
+      "min": 2,
+      "max": 2
+     },
+     {
+      "type": 1,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 5,
+      "min": 2,
+      "max": 2
+     },
+     {
+      "type": 1,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 4,
+      "min": 2,
+      "max": 2
+     },
+     {
+      "type": 1,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 10,
+   "item": 134,
+   "amount": "corpses",
+   "requires": [
+    1
+   ],
+   "hoursFactor": 24,
+   "rewards": [
+    [
+     {
+      "type": 4,
+      "min": 1,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 12,
+   "item": 106,
+   "amount": 1,
+   "transfer": "satellite",
+   "hoursFactor": 40,
+   "rewards": [
+    [
+     {
+      "type": 5,
+      "amount": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 13,
+   "item": 103,
+   "amount": 1,
+   "transfer": "jet",
+   "hoursFactor": 12,
+   "rewards": [
+    [
+     {
+      "type": 1,
+      "amount": 150
+     }
+    ]
+   ]
+  },
+  {
+   "id": 14,
+   "item": 164,
+   "requires": [
+    10
+   ],
+   "amount": "fragments",
+   "hoursFactor": 24,
+   "rewards": [
+    [
+     {
+      "type": 1,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 4,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 5,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 15,
+   "item": 139,
+   "requires": [
+    47
+   ],
+   "amount": "corpses",
+   "hoursFactor": 12,
+   "rewards": [
+    [
+     {
+      "type": 3,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 4,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 5,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 16,
+   "item": 138,
+   "requires": [
+    46
+   ],
+   "amount": "corpses",
+   "hoursFactor": 12,
+   "rewards": [
+    [
+     {
+      "type": 3,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 4,
+      "min": 2,
+      "max": 2
+     }
+    ],
+    [
+     {
+      "type": 5,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 17,
+   "item": 146,
+   "requires": [
+    55
+   ],
+   "amount": 2,
+   "hoursFactor": 12,
+   "rewards": [
+    [
+     {
+      "type": 1,
+      "min": 2,
+      "max": 2
+     },
+     {
+      "type": 5,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 18,
+   "item": 151,
+   "requires": [
+    38
+   ],
+   "amount": 1,
+   "hoursFactor": 24,
+   "rewards": [
+    [
+     {
+      "type": 6,
+      "min": 2,
+      "max": 2
+     },
+     {
+      "type": 2,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 19,
+   "item": 41,
+   "requires": [
+    23
+   ],
+   "amount": 3,
+   "hoursFactor": 12,
+   "rewards": [
+    [
+     {
+      "type": 4,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 20,
+   "item": 45,
+   "requires": [
+    25
+   ],
+   "amount": {
+    "rand": [
+     2,
+     1
+    ]
+   },
+   "hoursFactor": 12,
+   "rewards": [
+    [
+     {
+      "type": 4,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 21,
+   "item": 42,
+   "requires": [
+    24
+   ],
+   "amount": {
+    "rand": [
+     3,
+     1
+    ]
+   },
+   "hoursFactor": 12,
+   "rewards": [
+    [
+     {
+      "type": 4,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 22,
+   "item": 155,
+   "requires": [
+    37
+   ],
+   "amount": 1,
+   "hoursFactor": 24,
+   "rewards": [
+    [
+     {
+      "type": 2,
+      "min": 2,
+      "max": 2
+     },
+     {
+      "type": 3,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 23,
+   "item": 157,
+   "requires": [
+    39
+   ],
+   "amount": 1,
+   "hoursFactor": 24,
+   "rewards": [
+    [
+     {
+      "type": 3,
+      "min": 2,
+      "max": 2
+     },
+     {
+      "type": 4,
+      "min": 1,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 24,
+   "item": 47,
+   "requires": [
+    26
+   ],
+   "amount": 1,
+   "hoursFactor": 12,
+   "rewards": [
+    [
+     {
+      "type": 5,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 25,
+   "item": 156,
+   "requires": [
+    42
+   ],
+   "amount": 1,
+   "hoursFactor": 24,
+   "rewards": [
+    [
+     {
+      "type": 4,
+      "min": 2,
+      "max": 2
+     },
+     {
+      "type": 3,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 28,
+   "item": 187,
+   "requires": [
+    57
+   ],
+   "amount": 5,
+   "hoursFactor": 12,
+   "rewards": [
+    [
+     {
+      "type": 4,
+      "min": 1,
+      "max": 2
+     },
+     {
+      "type": 5,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 29,
+   "item": 158,
+   "requires": [
+    43
+   ],
+   "amount": 1,
+   "hoursFactor": 24,
+   "rewards": [
+    [
+     {
+      "type": 2,
+      "min": 2,
+      "max": 2
+     },
+     {
+      "type": 5,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 30,
+   "item": 165,
+   "requires": [
+    7
+   ],
+   "amount": 1,
+   "hoursFactor": 16,
+   "rewards": [
+    [
+     {
+      "type": 6,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 31,
+   "item": 188,
+   "requires": [
+    58
+   ],
+   "amount": 10,
+   "hoursFactor": 12,
+   "rewards": [
+    [
+     {
+      "type": 5,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 32,
+   "item": 215,
+   "requires": [
+    20
+   ],
+   "amount": 3,
+   "hoursFactor": 12,
+   "rewards": [
+    [
+     {
+      "type": 3,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 33,
+   "item": 143,
+   "requires": [
+    56
+   ],
+   "amount": 3,
+   "hoursFactor": 12,
+   "rewards": [
+    [
+     {
+      "type": 4,
+      "min": 2,
+      "max": 2
+     },
+     {
+      "type": 3,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 34,
+   "item": 144,
+   "requires": [
+    48
+   ],
+   "amount": 10,
+   "hoursFactor": 12,
+   "rewards": [
+    [
+     {
+      "type": 4,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 35,
+   "item": 167,
+   "amount": 10,
+   "requires": [
+    6
+   ],
+   "hours": 240,
+   "rewards": [
+    [
+     {
+      "type": 4,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 36,
+   "item": 169,
+   "amount": 6,
+   "requires": [
+    6
+   ],
+   "hours": 240,
+   "rewards": [
+    [
+     {
+      "type": 4,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 37,
+   "item": 179,
+   "amount": 1,
+   "requires": [
+    30
+   ],
+   "hours": 240,
+   "rewards": [
+    [
+     {
+      "type": 5,
+      "min": 8,
+      "max": 10
+     },
+     {
+      "type": 4,
+      "min": 2,
+      "max": 6
+     }
+    ]
+   ]
+  },
+  {
+   "id": 38,
+   "item": 153,
+   "amount": 1,
+   "requires": [
+    41
+   ],
+   "hours": 480,
+   "rewards": [
+    [
+     {
+      "type": 2,
+      "min": 2,
+      "max": 2
+     },
+     {
+      "type": 5,
+      "min": 2,
+      "max": 2
+     }
+    ]
+   ]
+  },
+  {
+   "id": 39,
+   "item": 150,
+   "amount": 1,
+   "requires": [
+    35
+   ],
+   "hours": 240,
+   "rewards": [
+    [
+     {
+      "type": 4,
+      "min": 2,
+      "max": 3
+     }
+    ]
+   ]
+  },
+  {
+   "id": 40,
+   "item": 154,
+   "amount": 1,
+   "requires": [
+    40
+   ],
+   "hours": 480,
+   "rewards": [
+    [
+     {
+      "type": 4,
+      "min": 2,
+      "max": 3
+     }
+    ]
+   ]
+  },
+  {
+   "id": 41,
+   "item": 152,
+   "amount": 1,
+   "requires": [
+    36
+   ],
+   "hours": 480,
+   "rewards": [
+    [
+     {
+      "type": 5,
+      "min": 2,
+      "max": 3
+     }
+    ]
+   ]
+  }
+ ]
+}
